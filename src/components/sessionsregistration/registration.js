@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
 import { push } from 'react-router-redux'
 import { register } from '../../actions/sessionsregistration'
-import { listSkills } from '../../actions/skills'
-import { listRoles } from '../../actions/roles'
-import { listInterests } from '../../actions/interests'
+import { listSkills, addUserskill, deleteUserskill, addSkill } from '../../actions/skills'
+import { listRoles, addUserrole, deleteUserrole, addRole } from '../../actions/roles'
+import { listInterests, addUserinterest, deleteUserinterest, addInterest } from '../../actions/interests'
 
 import AccountInput from './accountinput'
 import AddToListRelation from '../addtolistrelation'
@@ -40,7 +40,11 @@ class Registration extends React.Component {
   }
 
   render() {
-    let { account, skills, roles, interests } = this.props
+    let { account,
+      roles, addRole, addUserrole, deleteUserrole,
+      skills, addSkill, addUserskill, deleteUserskill,
+      interests, addInterest, addUserinterest, deleteUserinterest } = this.props
+      
     let step = ((step)=>{
       switch(step){
         case 1:
@@ -53,9 +57,10 @@ class Registration extends React.Component {
           return (<div>
             <h1>Welcome, {account.firstname ? account.firstname.charAt(0).toUpperCase() + account.firstname.slice(1) : null}, what are your roles?</h1>
             <AddToListRelation
-              pool = {{ list: roles, name: "Role" }}
-              relation = {{ list: account.roles, name: "Userrole" }}
+              pool = {{ list: roles, action: addRole.bind(this) }}
+              relation = {{ list: account.roles, action: addUserrole.bind(this), delete: deleteUserrole.bind(this) }}
               catName = "type"
+              title = "What's your role?"
               close = {{ action: this.nextStep.bind(this, 3), label: "next"}}
               />
           </div>)
@@ -63,9 +68,10 @@ class Registration extends React.Component {
           return (<div>
             <h1>Welcome, {account.firstname ? account.firstname.charAt(0).toUpperCase() + account.firstname.slice(1) : null}, add your skills!</h1>
             <AddToListRelation
-              pool = {{ list: skills, name: "Skill" }}
-              relation = {{ list: account.skills, name: "Userskill" }}
+              pool = {{ list: skills, action: addSkill.bind(this) }}
+              relation = {{ list: account.skills, action: addUserskill.bind(this), delete: deleteUserskill.bind(this) }}
               catName = "name"
+              title = "List your skills"
               close = {{ action: this.nextStep.bind(this, 4), label: "next"}}
               />
           </div>)
@@ -74,9 +80,10 @@ class Registration extends React.Component {
           <div>
             <h1>Welcome, {account.firstname ? account.firstname.charAt(0).toUpperCase() + account.firstname.slice(1) : null}, add your interests!</h1>
             <AddToListRelation
-              pool = {{ list: interests, name: "Interest" }}
-              relation = {{ list: account.interests, name: "Userinterest" }}
+              pool = {{ list: interests, action: addInterest.bind(this) }}
+              relation = {{ list: account.interests, name: "Userinterest", action: addUserinterest.bind(this), delete: deleteUserinterest.bind(this) }}
               catName = "name"
+              title = "What are your interests?"
               close = {{ action: this.nextStep.bind(this, 5), label: "next"}}
               />
           </div>)
@@ -111,7 +118,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    push, register, listSkills, listRoles, listInterests
+    push, register,
+    /* SKILL */
+    addSkill, listSkills,
+    deleteUserskill, addUserskill, //user
+    /* ROLE */
+    addRole, listRoles,
+    deleteUserrole, addUserrole, //user
+    /* INTEREST */
+    addInterest, listInterests,
+    deleteUserinterest, addUserinterest, //user
   }, dispatch)
 }
 

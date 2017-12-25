@@ -17,6 +17,7 @@ const rMiddleware = routerMiddleware(history);
 
 let initialState = {
   manageAccount: {email: '', id: '', roles: [], skills: [], interests: []},
+  manageCurrentProject: {title: '', description: '', roles: [], skills: [], interests: []},
   manageLogin: {token: window.localStorage.getItem("current_user")},
   manageRoles: [],
   manageSkills: [],

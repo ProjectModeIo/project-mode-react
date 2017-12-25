@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import {  bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import './App.css';
-import {Route, Switch, Link} from 'react-router-dom'
+import { Route, Switch, Link} from 'react-router-dom'
 import { push } from 'react-router-redux'
 import Roles from './components/roles'
 import Dashboard from './components/profile/dashboard'
 import Login from './components/sessionsregistration/login'
 import Registration from './components/sessionsregistration/registration'
+import NewProject from './components/projects/newproject'
 import { clearUser, logout, setUser } from './actions/sessionsregistration' // session actions
 
 const Home = () => {
@@ -76,6 +77,7 @@ class App extends Component {
           <Route exact path='/login' component={Login} />
           <Route exact path='/registration' component={Registration} />
           <Route exact path='/dashboard' component={Dashboard} />
+          <Route exact path='/newproject' component={NewProject} />
           <Route path='/' component={Home} />
         </Switch>
       </div>

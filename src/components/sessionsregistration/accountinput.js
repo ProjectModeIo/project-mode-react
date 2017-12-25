@@ -36,7 +36,7 @@ export default class AccountInput extends Component {
     let { email, firstname, lastname, password } = this.state;
 
     if (!email || !firstname || !lastname || !password) {
-      return true;
+      return false;
     }
     return true;
   }

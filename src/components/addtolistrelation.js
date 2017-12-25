@@ -4,22 +4,17 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import Autocomplete from 'react-autocomplete'
-// import { listSkills, setUser, addQualification, listSkills, deleteQualification } from '../actions'
-import { addUserskill, deleteUserskill, addSkill } from '../actions/skills'
-import { addUserrole, deleteUserrole, addRole } from '../actions/roles'
-import { addUserinterest, deleteUserinterest, addInterest } from '../actions/interests'
+
 /*  props - add from pool to list
     - if not in pool, add to both pool and list
 
   e.g. props
   pool = {
-    list: []
-    name: "Skill"
+    list: [], action:
   }
 
   relation = {
-    list: []
-    name: 'Userskill'
+    list: [], action
   }
 
   catName = "type" or name
@@ -30,7 +25,7 @@ import { addUserinterest, deleteUserinterest, addInterest } from '../actions/int
 
 */
 
-class AddToListRelation extends React.Component {
+export default class AddToListRelation extends React.Component {
   constructor(props) {
     super(props)
 
@@ -54,11 +49,11 @@ class AddToListRelation extends React.Component {
 
     if (!inList) {
       // add to redux pool store if new item
-      this.props[`add${this.props.pool.name}`]({[this.props.catName]: itemName})
+      this.props.pool.action({[this.props.catName]: itemName})
     }
 
     // this.props.addUserskill({type: "front-end development"})
-    this.props[`add${this.props.relation.name}`]({[this.props.catName]: itemName});
+    this.props.relation.action({[this.props.catName]: itemName});
 
     this.setState({
       itemInput: ''
@@ -66,7 +61,7 @@ class AddToListRelation extends React.Component {
   }
 
   deleteItem(id) {
-    this.props[`delete${this.props.relation.name}`](id);
+    this.props.relation.delete(id);
   }
 
   matchStateToTerm(state, value) {
@@ -77,7 +72,7 @@ class AddToListRelation extends React.Component {
   }
 
   render() {
-    let { account, pool, relation, catName, close } = this.props
+    let { pool, relation, catName, close, title } = this.props
     let inRelationArr = relation.list.map((item) => item[catName])
 
     return (
@@ -96,7 +91,7 @@ class AddToListRelation extends React.Component {
           onSelect={(val) => this.setState({ itemInput: val })}
         />
         <button onClick={this.addItem.bind(this)}>Submit</button>
-        <h2>{relation.name}</h2>
+        <h2>{title}</h2>
         {relation.list.map((item, index) => {
           return (
             <div key={index}>
@@ -110,30 +105,3 @@ class AddToListRelation extends React.Component {
     )
   }
 }
-
-const mapStateToProps = (state) => {
-  return ({
-    token: state.manageLogin.token,
-    account: state.manageAccount,
-    skills: state.manageSkills
-  })
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    /* SKILL */
-    addSkill,
-    deleteUserskill, addUserskill, //user
-    /* ROLE */
-    addRole,
-    deleteUserrole, addUserrole, //user
-    /* INTEREST */
-    addInterest,
-    deleteUserinterest, addUserinterest, //user
-    push
-  }, dispatch)
-}
-
-const ConnectedAddToListRelation = connect(mapStateToProps, mapDispatchToProps)(AddToListRelation)
-
-export default ConnectedAddToListRelation
