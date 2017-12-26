@@ -5,7 +5,8 @@ let defaultState = {
   id: '',
   roles: [],
   skills: [],
-  interests: []
+  interests: [],
+  created_projects: []
 }
 export const manageAccount = (state=defaultState, action) => {
   switch (action.type) {
@@ -20,6 +21,8 @@ export const manageAccount = (state=defaultState, action) => {
       return Object.assign({}, state, {skills: [...state.skills, action.payload ]})
     case "ADD_USER_INTEREST":
       return Object.assign({}, state, {interests: [...state.interests, action.payload ]})
+    case "ADD_USER_PROJECT":
+      return Object.assign({}, state, {created_projects: [...state.created_projects, action.payload]})
     case "DELETE_USER_ROLE":
       var newRoles = state.roles.filter((item) => {
         return item.id !== action.payload

@@ -16,7 +16,11 @@ const history = createHistory();
 const rMiddleware = routerMiddleware(history);
 
 let initialState = {
-  manageAccount: {email: '', id: '', roles: [], skills: [], interests: []},
+  manageAccount: {email: '', id: '',
+    roles: [], skills: [], interests: [],
+    created_projects: []
+  },
+  manageProjects: {},
   manageCurrentProject: {title: '', description: '', roles: [], skills: [], interests: []},
   manageLogin: {token: window.localStorage.getItem("current_user")},
   manageRoles: [],

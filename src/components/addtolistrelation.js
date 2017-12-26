@@ -5,24 +5,13 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import Autocomplete from 'react-autocomplete'
 
-/*  props - add from pool to list
-    - if not in pool, add to both pool and list
-
-  e.g. props
-  pool = {
-    list: [], action:
-  }
-
-  relation = {
-    list: [], action
-  }
-
-  catName = "type" or name
-  close = {
-    action: action on close
-    label: label for button
-  }
-
+/*  props:
+    pool = {{ list: roles, action: addRole.bind(this) }}
+    relation = {{ list: currentProject.roles, action: addProjectrole.bind(this, currentProject.id), delete: deleteProjectrole.bind(this) }}
+    catName = "type"
+    title = "What roles do you need?"
+    allowMultiple = {true}
+    close = {{ action: this.nextStep.bind(this, 3), label: "next"}}
 */
 
 export default class AddToListRelation extends React.Component {
@@ -72,14 +61,14 @@ export default class AddToListRelation extends React.Component {
   }
 
   render() {
-    let { pool, relation, catName, close, title } = this.props
+    let { pool, relation, catName, close, title, allowMultiple } = this.props
     let inRelationArr = relation.list.map((item) => item[catName])
 
     return (
       <div>
         <Autocomplete
           getItemValue={(item) => item[catName]}
-          items={pool.list.filter((item) => !inRelationArr.includes(item[catName]))}
+          items={allowMultiple ? pool.list : pool.list.filter((item) => !inRelationArr.includes(item[catName]))}
           renderItem={(item, isHighlighted) =>
             <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
               {item[catName]}
@@ -100,7 +89,7 @@ export default class AddToListRelation extends React.Component {
             </div>
           )
         })}
-        <button onClick={close.action.bind(this)}>{close.label}</button>
+        {close ? <button onClick={close.action.bind(this)}>{close.label}</button> : null }
       </div>
     )
   }

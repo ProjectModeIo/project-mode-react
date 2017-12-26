@@ -25,6 +25,11 @@ export const register = (user_params) => {
     })
     .catch((errors) => {
       debugger;
+      let error = errors && errors.response && errors.response.data && error || "An error has occurred!";
+      dispatch({
+        type: 'SET_STATUS',
+        payload: error
+      })
     })
   }
 }
@@ -47,10 +52,15 @@ export const login = (user_params) => {
       ]))
     })
     .catch((errors) => {
-      debugger;
+      let error = errors && errors.response && errors.response.data && errors.response.data.error || "An error has occurred!";
+      // dispatch({
+      //   type: 'SET_STATUS',
+      //   payload: error
+      // })
+      // debugger;
       dispatch({
         type: "ADD_ERROR",
-        payload: errors.response.data.error
+        payload: error
       })
       setTimeout(()=>{dispatch({
         type: "ADD_ERROR",

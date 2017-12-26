@@ -36,6 +36,7 @@ class Login extends React.Component {
           <input placeholder="Password" type="password" value={this.state.password} onChange={this.handleChange.bind(this, "password")} /><br />
           <button type="submit">Log In</button>
         </form>
+        {this.props.status.error ? <div>{this.props.status.error}</div>: null}
       </div>);
   }
 }
@@ -44,6 +45,7 @@ class Login extends React.Component {
 const mapStateToProps = (state) => {
   return ({
     token: state.manageLogin.token,
+    status: state.manageStatus,
     account: state.manageAccount
   })
 }

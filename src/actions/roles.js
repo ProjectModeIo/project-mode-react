@@ -11,25 +11,35 @@ export function listRoles(){
         })
       })
       .catch((errors)=>{
-        let error = errors.response.data.errors
         debugger;
+        // let error = errors.response.data.errors
       })
   }
 }
 
+export const addRole = (params) => {
+  // only add to store, api should only get updated in the addUserrole
+  return {
+    type: 'ADD_ROLE',
+    payload: params
+  }
+}
+
+/* USER SPECIFIC */
+
 export const addUserrole = (params) => {
   return (dispatch) => {
     api.post('/userroles', params)
-      .then(({data}) => {
-        dispatch({
-          type: 'ADD_USER_ROLE',
-          payload: data.data
-        })
+    .then(({data}) => {
+      dispatch({
+        type: 'ADD_USER_ROLE',
+        payload: data.data
       })
-      .catch((errors) => {
-        debugger;
-        // let error = errors.response.data.errors
-      })
+    })
+    .catch((errors) => {
+      debugger;
+      // let error = errors.response.data.errors
+    })
   }
 }
 
@@ -48,10 +58,25 @@ export const deleteUserrole = (id) => {
   }
 }
 
-export const addRole = (params) => {
-  // only add to store, api should only get updated in the addUserrole
-  return {
-    type: 'ADD_ROLE',
-    payload: params
+/* PROJECT SPECIFC */
+export const addProjectrole = (project_id, params) => {
+  params.project_id = project_id;
+
+  return (dispatch) => {
+    api.post('/projectroles', params)
+    .then(({data}) => {
+      dispatch({
+        type: 'ADD_PROJECT_ROLE',
+        payload: data.data
+      })
+    })
+    .catch((errors) => {
+      debugger;
+      // let error = errors.response.data.errors
+    })
   }
+}
+
+export const deleteProjectrole = (params) => {
+
 }

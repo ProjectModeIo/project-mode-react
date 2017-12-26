@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {  bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
+// import { push } from 'react-router-redux'
 
 class Dashboard extends Component {
   constructor(prop) {
@@ -9,7 +10,10 @@ class Dashboard extends Component {
   }
 
   render() {
-    let {email, firstname, lastname, tagline, interests, roles, skills} = this.props.account
+    let { username,
+      email, firstname, lastname, tagline,
+      interests, roles, skills,
+      created_projects } = this.props.account
 
     return (
       <div className="Dashboard">
@@ -21,9 +25,36 @@ class Dashboard extends Component {
           who enjoys <ListDisplay list={interests} catName="name" />
         </p>
       <Link to={'/newproject'}>Create a new project?</Link>
+      <h2>Your projects</h2>
+      <ListProjects list={created_projects} catName="title" username={username}/>
       </div>
     );
   }
+}
+
+const ListProjects = (props) => {
+  return (
+    <div>
+      {props.list.map((project, index) => {
+        return (
+          <ListProjectLine
+            key={index}
+            username={props.username}
+            project={project}
+            />
+        )
+      })}
+    </div>
+  )
+}
+
+const ListProjectLine = (props) => {
+  return (
+    <div>
+      <Link to={`/u/${props.username}/${props.project.slug}`} >{props.project.title}</Link>
+      <p>{props.project.description}</p>
+    </div>
+  )
 }
 
 const ListDisplay = (props) => {
@@ -58,6 +89,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    // push
   }, dispatch)
 }
 

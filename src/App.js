@@ -9,6 +9,8 @@ import Dashboard from './components/profile/dashboard'
 import Login from './components/sessionsregistration/login'
 import Registration from './components/sessionsregistration/registration'
 import NewProject from './components/projects/newproject'
+import EditProject from './components/projects/editproject'
+import ShowProject from './components/projects/showproject'
 import { clearUser, logout, setUser } from './actions/sessionsregistration' // session actions
 
 const Home = () => {
@@ -78,6 +80,10 @@ class App extends Component {
           <Route exact path='/registration' component={Registration} />
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/newproject' component={NewProject} />
+          <Route exact path="/u/:username/:slug/edit" component={EditProject} />
+          <Route exact path="/u/:username/:slug" component={ShowProject} />
+          <Route exact path='/project/:id/edit' component={EditProject} />
+          <Route exact path='/project/:id' component={ShowProject} />
           <Route path='/' component={Home} />
         </Switch>
       </div>
