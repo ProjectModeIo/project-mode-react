@@ -44,7 +44,7 @@ class Registration extends React.Component {
       roles, addRole, addUserrole, deleteUserrole,
       skills, addSkill, addUserskill, deleteUserskill,
       interests, addInterest, addUserinterest, deleteUserinterest } = this.props
-      
+
     let step = ((step)=>{
       switch(step){
         case 1:
@@ -89,7 +89,7 @@ class Registration extends React.Component {
           </div>)
         case 5:
           setTimeout(()=>{
-            this.props.push('/dashboard');
+            this.props.push('/user/dashboard');
           }, 2000)
           return <div>Congrats, you're all signed up!  Redirecting you now...</div>
       }

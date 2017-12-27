@@ -4,9 +4,17 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { loadProject, loadProjectBySlug, clearProject } from '../../actions/projects'
 
+import Comments from './comments'
+import EditProject from './editproject'
+import DisplayProject from './displayproject'
+
 class ShowProject extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      editing: false
+    }
   }
 
   componentWillMount() {
@@ -24,12 +32,12 @@ class ShowProject extends Component {
     let { slug, id } = nextProps.match.params
     if (slug) {
       if (this.props.match.params.slug !== slug) {
-        debugger;
+        // debugger;
         this.props.loadProjectBySlug(slug)
       }
     } else if (id) {
       if (this.props.match.params.id !== id) {
-        debugger;
+        // debugger;
         this.props.loadProject(id);
       }
     }
@@ -41,12 +49,22 @@ class ShowProject extends Component {
 
   render() {
     /* variables */
-    let {currentProject} = this.props
+    let {currentProject, account} = this.props
+    let {editing} = this.state
+
+    /* project creator admin */
+    let isOwner = currentProject.created_by === account.username;
+    let adminBox =
+    <div>
+      <button onClick={()=>{this.setState({editing: !editing})}}>
+        {editing ? "done":"edit"}
+      </button>
+    </div>
 
     return (
       <div>
-        <h1>{currentProject.title}</h1>
-        <p>{currentProject.description}</p>
+        {isOwner ? adminBox : null}
+        {isOwner && editing ? <EditProject />:<DisplayProject />}
       </div>
     )
   }
@@ -55,6 +73,7 @@ class ShowProject extends Component {
 const mapStateToProps = (state) => {
   return ({
     status: state.manageStatus,
+    account: state.manageAccount,
     currentProject: state.manageCurrentProject
   })
 }

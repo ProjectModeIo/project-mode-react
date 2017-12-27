@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
 import { push } from 'react-router-redux'
 import { login } from '../../actions/sessionsregistration'
 
-class Login extends React.Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {

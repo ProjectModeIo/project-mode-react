@@ -5,11 +5,12 @@ import {manageStatus} from './manageStatus'
 import {manageSkills} from './manageSkills'
 import {manageInterests} from './manageInterests'
 import {manageCurrentProject} from './manageCurrentProject'
+import {manageFeed} from './manageFeed'
 import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
   manageAccount, manageLogin, manageRoles, manageStatus, manageSkills, manageInterests,
-  manageCurrentProject
+  manageCurrentProject, manageFeed
 })
 
 export default rootReducer

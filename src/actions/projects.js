@@ -61,7 +61,6 @@ export const loadProjectBySlug = (slug) => {
   return (dispatch) => {
     api.get(`/projectslug/${slug}`)
     .then(({data}) => {
-      debugger;
       dispatch({
         type: 'LOAD_PROJECT',
         payload: data.data
@@ -77,5 +76,34 @@ export const clearProject = () =>{
   window.localStorage.removeItem("project_in_progress");
   return{
     type: "CLEAR_PROJECT"
+  }
+}
+
+export const submitComment = (project_id, params) => {
+  params.comment.project_id = project_id
+
+  return (dispatch) => {
+    api.post(`/comments`, params)
+    .then(({data}) => {
+      dispatch({
+        type: "ADD_COMMENT",
+        payload: data.data
+      })
+    })
+    .catch((errors) => {
+      let errMsg = ((error) => {
+        switch(true) {
+          case (error.data && error.data.message === "invalid_token"):
+            return "You must be logged in"
+          default:
+            return "Something went wrong"
+        }
+      })(errors.response)
+
+      dispatch({
+        type: "ADD_ERROR",
+        payload: errMsg
+      })
+    })
   }
 }

@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 // import { push } from 'react-router-redux'
 
+import ListDisplay from '../listdisplay'
+import ListProjects from '../projects/listprojects'
+
 class Dashboard extends Component {
   constructor(prop) {
     super(prop)
@@ -19,66 +22,33 @@ class Dashboard extends Component {
       <div className="Dashboard">
         <h1>Hi, {firstname}</h1>
         <p>{tagline}</p>
-        <p>
-          You are a <ListDisplay list={roles} catName="type" />,
-          experienced with in <ListDisplay list={skills} catName="name" />,
-          who enjoys <ListDisplay list={interests} catName="name" />
-        </p>
-      <Link to={'/newproject'}>Create a new project?</Link>
-      <h2>Your projects</h2>
+        <div>
+          You are a
+          <ListDisplay
+            list={roles}
+            catName="type"
+            customProps={{ listClass: 'inline-list__wrap', itemClass: 'inline-list__item' }} />
+        </div>
+          <div>You have experience with
+            <ListDisplay
+              list={skills}
+              catName="name"
+              customProps={{ listClass: 'inline-list__wrap', itemClass: 'inline-list__item' }} />
+          </div>
+          <div>
+            You enjoy
+            <ListDisplay
+              list={interests}
+              catName="name"
+              customProps={{ listClass: 'inline-list__wrap', itemClass: 'inline-list__item' }} />
+          </div>
+        <p><Link to={'/user/edit'}>Edit profile</Link></p>
+      <Link to={'/project/new'}>Create a new project?</Link>
+      <h2>Manage your projects</h2>
       <ListProjects list={created_projects} catName="title" username={username}/>
       </div>
     );
   }
-}
-
-const ListProjects = (props) => {
-  return (
-    <div>
-      {props.list.map((project, index) => {
-        return (
-          <ListProjectLine
-            key={index}
-            username={props.username}
-            project={project}
-            />
-        )
-      })}
-    </div>
-  )
-}
-
-const ListProjectLine = (props) => {
-  return (
-    <div>
-      <Link to={`/u/${props.username}/${props.project.slug}`} >{props.project.title}</Link>
-      <p>{props.project.description}</p>
-    </div>
-  )
-}
-
-const ListDisplay = (props) => {
-  return (
-    <span>
-      {props.list.map((item, index) => {
-        return (
-          <ListDisplayItem
-            key={index}
-            item={item}
-            catName={props.catName}
-            />
-        )
-      })}
-    </span>
-  )
-}
-
-const ListDisplayItem = (props) => {
-  return (
-    <span>
-      {props.item[props.catName]}
-    </span>
-  )
 }
 
 const mapStateToProps = (state) => {

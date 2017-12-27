@@ -61,16 +61,23 @@ export default class AddToListRelation extends React.Component {
   }
 
   render() {
-    let { pool, relation, catName, close, title, allowMultiple } = this.props
+    let { pool, relation, catName, close, title, allowMultiple, showList } = this.props
+    let customProps = this.props.customProps || {}
+    let { outerWrapClass, outerWrapStyle, inputClass, inputStyle,
+      wrapperClass, wrapperStyle, renderItemClass } = customProps
+
     let inRelationArr = relation.list.map((item) => item[catName])
 
     return (
-      <div>
+      <div style={outerWrapStyle} className={outerWrapClass}>
+        {title ? <h2>{title}</h2> : null }
         <Autocomplete
+          inputProps={{ className: inputClass, style: inputStyle }}
+          wrapperProps={{ className: wrapperClass, style: wrapperStyle || { display: "inline-block" } }}
           getItemValue={(item) => item[catName]}
           items={allowMultiple ? pool.list : pool.list.filter((item) => !inRelationArr.includes(item[catName]))}
           renderItem={(item, isHighlighted) =>
-            <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+            <div className={renderItemClass} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
               {item[catName]}
             </div>
           }
@@ -79,16 +86,15 @@ export default class AddToListRelation extends React.Component {
           onChange={(e) => this.setState({ itemInput: e.target.value })}
           onSelect={(val) => this.setState({ itemInput: val })}
         />
-        <button onClick={this.addItem.bind(this)}>Submit</button>
-        <h2>{title}</h2>
-        {relation.list.map((item, index) => {
+      <button onClick={this.addItem.bind(this)}>add</button>
+        {showList ? relation.list.map((item, index) => {
           return (
             <div key={index}>
               {item[catName]}
               <button onClick={this.deleteItem.bind(this, item.id)}>x</button>
             </div>
           )
-        })}
+        }) : null}
         {close ? <button onClick={close.action.bind(this)}>{close.label}</button> : null }
       </div>
     )

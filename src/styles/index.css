@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat";
+}
+
+/* --- DROPDOWN LIST STYLES --- */
+/* inline */
+.inline-list__wrap {
+  display: inline-block
+}
+
+.inline-list__item {
+  padding: 3px 6px;
+  margin: 2px;
+  background-color: #eee
+}

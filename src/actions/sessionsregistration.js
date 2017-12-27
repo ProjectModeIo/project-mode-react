@@ -18,6 +18,10 @@ export const register = (user_params) => {
           payload: data.data
         },
         {
+          type: 'LOAD_FEED',
+          payload: data.feed
+        },
+        {
           type: 'SET_STATUS',
           payload: 'complete'
         }
@@ -48,6 +52,10 @@ export const login = (user_params) => {
         {
           type: 'LOAD_USER',
           payload: data.data
+        },
+        {
+          type: 'LOAD_FEED',
+          payload: data.feed
         }
       ]))
     })
@@ -95,14 +103,19 @@ export function setUser(token){
     api.post('/sessions/refresh')
       .then(({data}) => {
         console.log('set user success')
-        dispatch({
-          type: "LOAD_USER",
-          payload: data.data
-        })
+        dispatch(batchActions([
+          {
+            type: "LOAD_FEED",
+            payload: data.feed
+          },
+          {
+            type: "LOAD_USER",
+            payload: data.data
+        }]))
       })
       .catch((errors)=>{
+        debugger;
         console.log('set user error')
-        debugger
         dispatch({
           type: "ADD_ERROR",
           payload: errors.response.data.error
@@ -112,5 +125,22 @@ export function setUser(token){
           payload: ""
         })}, 2000)
       })
+  }
+}
+
+export const loadDefaultView = () => {
+  return (dispatch) => {
+    api.get('/projects')
+    .then(({data}) => {
+      dispatch({
+        type: "LOAD_FEED",
+        payload: {
+          projects_all: data.data
+        }
+      })
+    })
+    .catch((errors) => {
+      debugger;
+    })
   }
 }

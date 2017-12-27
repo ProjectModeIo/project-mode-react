@@ -1,0 +1,16 @@
+.Nav {
+  background-color: #eee;
+  display: flex;
+  flex-direction: row;
+}
+
+.navbar_link {
+  display: inline-block;
+  text-decoration: none;
+  padding: 15px;
+  transition: .5s all;
+}
+
+.navbar_link:hover {
+  background-color: #fff;
+}

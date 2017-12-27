@@ -31,10 +31,13 @@ export const addUserrole = (params) => {
   return (dispatch) => {
     api.post('/userroles', params)
     .then(({data}) => {
-      dispatch({
+      dispatch(batchActions([{
         type: 'ADD_USER_ROLE',
         payload: data.data
-      })
+      },{
+        type: 'LOAD_FEED',
+        payload: data.feed
+      }]))
     })
     .catch((errors) => {
       debugger;
@@ -47,10 +50,13 @@ export const deleteUserrole = (id) => {
   return (dispatch) => {
     api.delete(`/userroles/${id}`)
       .then(({data}) => {
-        dispatch({
+        dispatch(batchActions([{
           type: 'DELETE_USER_ROLE',
-          payload: id
-        })
+          payload: data.id
+        },{
+          type: 'LOAD_FEED',
+          payload: data.feed
+        }]))
       })
       .catch((errors) => {
         debugger;
@@ -77,6 +83,17 @@ export const addProjectrole = (project_id, params) => {
   }
 }
 
-export const deleteProjectrole = (params) => {
-
+export const deleteProjectrole = (id) => {
+  return (dispatch) => {
+    api.delete(`/projectroles/${id}`)
+    .then(({data}) => {
+      dispatch({
+        type: 'DELETE_PROJECT_ROLE',
+        payload: id
+      })
+    })
+    .catch((errors) => {
+      debugger;
+    })
+  }
 }

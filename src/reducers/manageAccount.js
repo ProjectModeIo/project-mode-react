@@ -11,7 +11,6 @@ let defaultState = {
 export const manageAccount = (state=defaultState, action) => {
   switch (action.type) {
     case "LOAD_USER":
-      // debugger;
       return Object.assign({}, state, action.payload)
     case "CLEAR_USER":
       return defaultState

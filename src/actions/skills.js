@@ -16,14 +16,26 @@ export function listSkills(){
   }
 }
 
+export const addSkill = (params) => {
+  // only add to store, api should only get updated in the addUserskill
+  return {
+    type: 'ADD_SKILL',
+    payload: params
+  }
+}
+
+/* USER SPECIFIC */
 export const addUserskill = (params) => {
   return (dispatch) => {
     api.post('/userskills', params)
       .then(({data}) => {
-        dispatch({
+        dispatch(batchActions([{
           type: 'ADD_USER_SKILL',
           payload: data.data
-        })
+        },{
+          type: 'LOAD_FEED',
+          payload: data.feed
+        }]))
       })
       .catch((errors) => {
         debugger;
@@ -36,10 +48,13 @@ export const deleteUserskill = (id) => {
   return (dispatch) => {
     api.delete(`/userskills/${id}`)
       .then(({data}) => {
-        dispatch({
+        dispatch(batchActions([{
           type: 'DELETE_USER_SKILL',
-          payload: id
-        })
+          payload: data.id
+        },{
+          type: 'LOAD_FEED',
+          payload: data.feed
+        }]))
       })
       .catch((errors) => {
         debugger;
@@ -47,10 +62,36 @@ export const deleteUserskill = (id) => {
   }
 }
 
-export const addSkill = (params) => {
-  // only add to store, api should only get updated in the addUserskill
-  return {
-    type: 'ADD_SKILL',
-    payload: params
+/* PROJECT SPECIFC */
+export const addProjectskill = (project_id, params) => {
+  params.project_id = project_id;
+
+  return (dispatch) => {
+    api.post('/projectstacks', params)
+    .then(({data}) => {
+      dispatch({
+        type: 'ADD_PROJECT_SKILL',
+        payload: data.data
+      })
+    })
+    .catch((errors) => {
+      debugger;
+      // let error = errors.response.data.errors
+    })
+  }
+}
+
+export const deleteProjectskill = (id) => {
+  return (dispatch) => {
+    api.delete(`/projectstacks/${id}`)
+    .then(({data}) => {
+      dispatch({
+        type: 'DELETE_PROJECT_SKILL',
+        payload: id
+      })
+    })
+    .catch((errors) => {
+      debugger;
+    })
   }
 }

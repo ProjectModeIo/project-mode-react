@@ -1,0 +1,19 @@
+.project-list_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-list_item {
+  background-color: #eee;
+  margin-top: 5px;
+  padding: 5px;
+}
+
+.project-list_item.is-owner {
+  background-color: #aaa;
+}
+
+.project-list_meta-data {
+  font-size: 14px;
+  padding-left: 5px;
+}
