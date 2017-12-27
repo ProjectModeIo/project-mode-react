@@ -24,6 +24,13 @@ export const register = (user_params) => {
         {
           type: 'SET_STATUS',
           payload: 'complete'
+        },
+        {
+          type: "SET_LOGIN_STATUS",
+          payload: {
+            logged_in: true,
+            loaded: true
+          }
         }
       ]))
     })
@@ -56,6 +63,13 @@ export const login = (user_params) => {
         {
           type: 'LOAD_FEED',
           payload: data.feed
+        },
+        {
+          type: "SET_LOGIN_STATUS",
+          payload: {
+            logged_in: true,
+            loaded: true
+          }
         }
       ]))
     })
@@ -98,6 +112,7 @@ export const logout = () => {
   }
 }
 
+/* LOAD USER or non-user */
 export function setUser(token){
   return (dispatch) => {
     api.post('/sessions/refresh')
@@ -111,7 +126,15 @@ export function setUser(token){
           {
             type: "LOAD_USER",
             payload: data.data
-        }]))
+          },
+          {
+            type: "SET_LOGIN_STATUS",
+            payload: {
+              logged_in: true,
+              loaded: true
+            }
+          }
+        ]))
       })
       .catch((errors)=>{
         debugger;
@@ -132,12 +155,21 @@ export const loadDefaultView = () => {
   return (dispatch) => {
     api.get('/projects')
     .then(({data}) => {
-      dispatch({
-        type: "LOAD_FEED",
-        payload: {
-          projects_all: data.data
+      dispatch(batchActions([
+        {
+          type: "LOAD_FEED",
+          payload: {
+            projects_all: data.data
+          }
+        },
+        {
+          type: "SET_LOGIN_STATUS",
+          payload: {
+            logged_in: false,
+            loaded: true
+          }
         }
-      })
+      ]))
     })
     .catch((errors) => {
       debugger;

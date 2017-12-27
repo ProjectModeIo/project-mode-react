@@ -14,6 +14,12 @@ class Login extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loginStatus.logged_in) {
+      this.props.push('/user/dashboard')
+    }
+  }
+
   handleSubmit(e){
     e.preventDefault()
     this.props.login({
@@ -44,7 +50,7 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   return ({
-    token: state.manageLogin.token,
+    loginStatus: state.manageLogin,
     status: state.manageStatus,
     account: state.manageAccount
   })
@@ -52,7 +58,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    login
+    login, push
   }, dispatch)
 }
 

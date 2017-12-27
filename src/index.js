@@ -24,7 +24,11 @@ let initialState = {
     projects_recommended: [], projects_all: []
   },
   manageCurrentProject: {title: '', description: '',roles: [], skills: [], interests: [], comments: []},
-  manageLogin: {token: window.localStorage.getItem("current_user")},
+  manageLogin: {
+    token: window.localStorage.getItem("current_user"),
+    logged_in: false,
+    loaded: false
+  },
   manageRoles: [],
   manageSkills: [],
   manageInterests: [],

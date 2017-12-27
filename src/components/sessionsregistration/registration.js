@@ -20,6 +20,10 @@ class Registration extends React.Component {
   }
 
   componentWillMount(){
+    if (this.props.token) {
+      this.props.push('/user/dashboard')
+    }
+
     this.props.listSkills();
     this.props.listRoles();
     this.props.listInterests();

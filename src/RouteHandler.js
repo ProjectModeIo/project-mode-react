@@ -10,46 +10,60 @@ import Home from './components/home'
 import Dashboard from './components/profile/dashboard'
 import EditProfile from './components/profile/editprofile'
 import Login from './components/sessionsregistration/login'
+import Logout from './components/sessionsregistration/logout'
 import Registration from './components/sessionsregistration/registration'
 import NewProject from './components/projects/newproject'
-import EditProject from './components/projects/editproject'
 import ShowProject from './components/projects/showproject'
 
-class RouteHandler extends Component {
+const Authorization = (allowed, status) => (WrappedComponent) => {
+  return class WithAuthorization extends Component {
+    constructor(props) {
+      super(props)
+    }
+    render() {
+      if (allowed.includes(status)) {
+        return <WrappedComponent {...this.props} />
+      } else {
+        return <h1>You must be logged in to do that</h1>
+      }
+    }
+  }
+}
+
+export default class RouteHandler extends Component {
   constructor(prop) {
     super(prop)
   }
 
   render() {
-    let { user } = this.props
+    let { loggedIn, loaded } = this.props
+    let LoggedIn = Authorization([true], loggedIn)
+    let AllAccess = Authorization([true, false], loggedIn)
+    let LoggedOut = Authorization([false], loggedIn)
 
     return (
       <div className="RouteHandler">
-        <Nav />
         <Switch>
           /* SESSION */
           <Route exact path='/login' component={Login} />
           <Route exact path='/registration' component={Registration} />
+          <Route exact path='/logout' component={Logout} />
 
           /* USER */
-          <Route exact path="/u/edit" component={EditProfile} />
-          <Route exact path='/u/dashboard' component={Dashboard} />
-          <Route exact path="/u/:username/:slug/edit" component={EditProject} />
-          <Route exact path="/u/:username/:slug" component={ShowProject} />
+          <Route exact path="/u/edit" component={LoggedIn(EditProfile)} />
+          <Route exact path='/u/dashboard' component={LoggedIn(Dashboard)} />
+          <Route exact path="/u/:username/:slug" component={AllAccess(ShowProject)} />
 
-          <Route exact path="/user/edit" component={EditProfile} />
-          <Route exact path='/user/dashboard' component={Dashboard} />
-          <Route exact path="/user/:username/:slug/edit" component={EditProject} />
-          <Route exact path="/user/:username/:slug" component={ShowProject} />
+          <Route exact path="/user/edit" component={LoggedIn(EditProfile)} />
+          <Route exact path='/user/dashboard' component={LoggedIn(Dashboard)} />
+          <Route exact path="/user/:username/:slug" component={AllAccess(ShowProject)} />
 
           /* PROJECT */
-          <Route exact path='/projects' component={ProjectFeed} />
-          <Route exact path='/p/new' component={NewProject} />
-          <Route exact path='/p/:id/edit' component={EditProject} />
-          <Route exact path='/p/:id' component={ShowProject} />
-          <Route exact path='/project/new' component={NewProject} />
-          <Route exact path='/project/:id/edit' component={EditProject} />
-          <Route exact path='/project/:id' component={ShowProject} />
+          <Route exact path='/projects' component={AllAccess(ProjectFeed)} />
+          <Route exact path='/p/new' component={LoggedIn(NewProject)} />
+          <Route exact path='/p/:id' component={AllAccess(ShowProject)} />
+          <Route exact path='/project/new' component={LoggedIn(NewProject)} />
+          <Route exact path='/project/:id' component={AllAccess(ShowProject)} />
           <Route path='/' component={Home} />
         </Switch>
       </div>

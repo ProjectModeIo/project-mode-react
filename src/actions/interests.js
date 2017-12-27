@@ -1,4 +1,4 @@
-import {batchActions} from 'redux-batched-actions';
+import { batchActions } from 'redux-batched-actions';
 import { setUser } from './sessionsregistration'
 import api from '../api';
 
