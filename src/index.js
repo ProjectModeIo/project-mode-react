@@ -9,7 +9,7 @@ import thunk from 'redux-thunk'
 import { Route } from 'react-router-dom'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './reducers'
-import {batchActions, enableBatching} from 'redux-batched-actions';
+import { enableBatching } from 'redux-batched-actions';
 import { Provider } from 'react-redux';
 
 const history = createHistory();

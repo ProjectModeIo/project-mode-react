@@ -8,9 +8,6 @@ import Comment from './comment'
 import { submitComment } from '../../actions/projects'
 
 class Comments extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   getReplies(parentId) {
     return this.props.currentProject.comments.filter(comment => comment.parent_id === parentId)

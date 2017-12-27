@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { Route, Switch, Link} from 'react-router-dom'
 import { push } from 'react-router-redux'
-import ProjectFeed from './components/projectfeed'
 import Nav from './components/nav'
 import RouteHandler from './RouteHandler'
 
 import { clearUser, logout, setUser, loadDefaultView } from './actions/sessionsregistration' // session actions
+
 class App extends Component {
-  constructor(prop) {
-    super(prop)
-  }
 
   componentWillMount(){
     if (this.props.token) {

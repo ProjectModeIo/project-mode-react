@@ -1,5 +1,6 @@
 import axios from 'axios'
-const API = process.env.REACT_APP_API_URL;
+const API = "https://stark-sands-69391.herokuapp.com/api/v1";
+// const API = process.env.REACT_APP_API_URL;
 
 function headers() {
   const token = localStorage.getItem('current_user')

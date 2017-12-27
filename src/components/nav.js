@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import '../styles/nav.css';
-import { Route, Switch, Link} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import { push } from 'react-router-redux'
 
 class Nav extends Component {
-  constructor(prop) {
-    super(prop)
-  }
 
   render() {
     let loggedIn = !!this.props.account.id;

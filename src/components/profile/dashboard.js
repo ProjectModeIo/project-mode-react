@@ -8,9 +8,6 @@ import ListDisplay from '../listdisplay'
 import ListProjects from '../projects/listprojects'
 
 class Dashboard extends Component {
-  constructor(prop) {
-    super(prop)
-  }
 
   render() {
     let { username,

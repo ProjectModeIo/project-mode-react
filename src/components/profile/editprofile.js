@@ -1,7 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link, Route } from 'react-router-dom'
 import { push } from 'react-router-redux'
 import '../../styles/profile.css'
 import { editProfile } from '../../actions/user'
@@ -84,7 +83,7 @@ class EditProfile extends React.Component {
       skills, addSkill, addUserskill, deleteUserskill,
       interests, addInterest, addUserinterest, deleteUserinterest } = this.props
 
-    let { firstname, lastname, username, email, tagline } = this.props.account
+    let { username, email } = this.props.account
 
     /* styles - move over to classes */
     let fnameStyle = {

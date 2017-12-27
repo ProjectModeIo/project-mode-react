@@ -36,7 +36,7 @@ export const register = (user_params) => {
     })
     .catch((errors) => {
       debugger;
-      let error = errors && errors.response && errors.response.data && error || "An error has occurred!";
+      let error = (errors && errors.response && errors.response.data && error) || "An error has occurred!";
       dispatch({
         type: 'SET_STATUS',
         payload: error
@@ -74,7 +74,7 @@ export const login = (user_params) => {
       ]))
     })
     .catch((errors) => {
-      let error = errors && errors.response && errors.response.data && errors.response.data.error || "An error has occurred!";
+      let error = (errors && errors.response && errors.response.data && errors.response.data.error) || "An error has occurred!";
       // dispatch({
       //   type: 'SET_STATUS',
       //   payload: error

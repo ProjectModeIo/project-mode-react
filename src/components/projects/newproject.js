@@ -1,7 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link, Route } from 'react-router-dom'
 import { push } from 'react-router-redux'
 import { addProject, loadInProgressProject, clearProject } from '../../actions/projects'
 
@@ -69,7 +68,6 @@ class NewProject extends React.Component {
               <EditProject />
             </div>
           )
-        case 3:
       }
     })(this.state.step);
 
