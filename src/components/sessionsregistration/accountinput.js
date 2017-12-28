@@ -13,12 +13,6 @@ export default class AccountInput extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.token){
-      this.props.nextStep()
-    }
-  }
-
   handleSubmit(event){
     event.preventDefault()
     if (this.validateFields()) {

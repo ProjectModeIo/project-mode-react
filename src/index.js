@@ -37,7 +37,7 @@ let initialState = {
 
 let store = createStore(enableBatching(rootReducer), initialState, composeWithDevTools(applyMiddleware(thunk, rMiddleware)));
 
-if (window.location.href.includes('http://projectmode.io') && window.localStorage.getItem('current_user') !== process.env.REACT_APP_PASSWORD) {
+if (window.location.href.includes('http://projectmode.io') && window.localStorage.getItem('dev_user') !== process.env.REACT_APP_PASSWORD) {
   ReactDOM.render(
     <div>
       :o there's nothing here!

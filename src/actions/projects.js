@@ -2,15 +2,11 @@ import api from '../api';
 import {batchActions} from 'redux-batched-actions';
 
 export const addProject = (project_params) => {
-  debugger;
   return (dispatch) => {
     api.post('/projects', { project: project_params })
     .then(({data}) => {
-      // window.localStorage.setItem("project_in_progress", JSON.stringify(data.data))
-      // no longer in progress
       window.localStorage.removeItem("project_in_progress")
-      // load as current project
-      debugger;
+      // remove in progress and load as current project
       dispatch(batchActions([
         {
           type: 'LOAD_PROJECT',

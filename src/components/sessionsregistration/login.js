@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
 import { push } from 'react-router-redux'
 import { login } from '../../actions/sessionsregistration'
+import LoginInput from './logininput'
 
 class Login extends Component {
   constructor(props) {
@@ -35,15 +36,11 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Log In</h3>
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <input placeholder="Email" type="email" value={this.state.email} onChange={this.handleChange.bind(this, "email")}  /><br />
-          <input placeholder="Password" type="password" value={this.state.password} onChange={this.handleChange.bind(this, "password")} /><br />
-          <button type="submit">Log In</button>
-        </form>
-        {this.props.status.error ? <div>{this.props.status.error}</div>: null}
-      </div>);
+      <LoginInput
+        loginStatus={this.props.loginStatus}
+        status={this.props.status}
+        login={this.props.login}
+        />);
   }
 }
 

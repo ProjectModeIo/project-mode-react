@@ -29,8 +29,16 @@ class Registration extends React.Component {
     this.props.listInterests();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.account.firstname && this.props.account.firstname && this.state.step === 1) {
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (!prevProps.account.firstname && this.props.account.firstname && this.state.step === 1) {
+  //     this.setState({
+  //       step: 2
+  //     })
+  //   }
+  // }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.token){
       this.setState({
         step: 2
       })
@@ -55,7 +63,6 @@ class Registration extends React.Component {
           return (<AccountInput
             token={this.props.token}
             register={this.props.register}
-            nextStep={this.nextStep.bind(this, 2)}
             />)
         case 2:
           return (<div>

@@ -6,9 +6,12 @@ import { addProject, clearProject } from '../../actions/projects'
 import { listSkills, addSkill } from '../../actions/skills'
 import { listRoles, addRole } from '../../actions/roles'
 import { listInterests, addInterest } from '../../actions/interests'
+import { login, register } from '../../actions/sessionsregistration'
 
 import ProjectInput from './projectinput'
 import EditProject from './editproject'
+import AccountInput from '../sessionsregistration/accountinput'
+import LoginInput from '../sessionsregistration/logininput'
 
 class NewProjectHomepage extends React.Component {
   constructor(props) {
@@ -35,8 +38,10 @@ class NewProjectHomepage extends React.Component {
     ]
 
     this.state = {
+      login: false,
       savedDraft: false,
-      step: 1,
+      step: "introStep",
+      params: null,
       form: {
         purpose: "title",
         description: "description",
@@ -49,7 +54,7 @@ class NewProjectHomepage extends React.Component {
     if (window.localStorage.getItem("project_in_progress")) {
       this.setState({
         savedDraft: true,
-        step: 2
+        step: "editProjStep"
       })
     }
 
@@ -64,6 +69,17 @@ class NewProjectHomepage extends React.Component {
 
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.step == "loginStep" && this.props.logged_in) {
+      if (this.props.currentProject.id) {
+        this.props.push(`/u/${this.props.currentProject.created_by}/${this.props.currentProject.slug}`)
+      } else {
+        let params = this.state.params || JSON.parse(window.localStorage.getItem('project_in_progress'))
+        this.props.addProject(params)
+      }
+    }
+  }
+
   handleChange(field, event){
     this.setState({
       form: Object.assign({}, this.state.form, {
@@ -72,13 +88,15 @@ class NewProjectHomepage extends React.Component {
     })
   }
 
-  handleLoginLogic(params) {
+  addProjectLoginLogic(params) {
+    /* projectinfo component already saves params in localStorage */
+    this.setState({
+      step: "loginStep",
+      params: params
+    })
+
     if (this.props.logged_in) {
-      this.props.push('/project/new?step=2')
-    } else {
-      this.setState({
-        step: 0
-      })
+      this.props.addProject(params)
     }
   }
 
@@ -94,14 +112,6 @@ class NewProjectHomepage extends React.Component {
     window.localStorage.setItem('project_in_progress', JSON.stringify(projData))
   }
 
-  handleProjectSubmit(params) {
-    /* save locally */
-    window.localStorage.setItem('project_in_progress', JSON.stringify(params))
-
-    /* if coming from homepage, pass to homepage submit */
-    this.handleLoginLogic(params)
-  }
-
   render() {
     /*
     FLOW:
@@ -111,7 +121,8 @@ class NewProjectHomepage extends React.Component {
 
 
     /* variables */
-    let { currentProject, clearProject, titleLine,
+    let { logged_in,
+      currentProject, clearProject, titleLine,
       roles, addRole, skills, addSkill, interests, addInterest} = this.props
 
     let roleInputStyle = {
@@ -124,10 +135,22 @@ class NewProjectHomepage extends React.Component {
       width: (this.state.form.interest.length * 14) + 10 + "px", // keep
     }
 
+    let LoginRegistration = this.state.login ? (
+      <LoginInput
+        loginStatus={this.props.loginStatus}
+        status={this.props.status}
+        login={this.props.login}
+        />
+    ) : (
+      <AccountInput
+        token={this.props.token}
+        register={this.props.register}
+        />
+    )
     /* steps */
     let step = ((step) => {
       switch(step) {
-        case 1:
+        case "introStep":
           return (
             <div className="edit-homepage_header">
               <h1>What are you working on?</h1>
@@ -157,12 +180,12 @@ class NewProjectHomepage extends React.Component {
               </h2>
               <button className="next-button" onClick={()=>{
                   this.generateProject();
-                  this.setState({ step: 2 })}}>
+                  this.setState({ step: "editProjStep" })}}>
                 Let's get to work
               </button>
             </div>
           )
-        case 2:
+        case "editProjStep":
           return(
             <div className="edit-homepage_header">
               <h1>{this.state.savedDraft ? "We saved your progress!":"Fine-tune your project"}</h1>
@@ -177,14 +200,22 @@ class NewProjectHomepage extends React.Component {
                 addRole={addRole.bind(this)}
                 addSkill={addSkill.bind(this)}
                 addInterest={addInterest.bind(this)}
-                addProject={this.props.addProject}
+                addProject={this.addProjectLoginLogic.bind(this)}
                 />
             </div>
           )
-        case 3:
+        case "loginStep":
           return (
             <div>
-              <h1>Login or Register to save your progress!</h1>
+              {
+                logged_in ?
+                <h1>Hold tight, we're bringing you to your project...</h1> :
+                <div>
+                  <h1>Login or Register to save your progress!</h1>
+                  <button onClick={()=>{ this.setState({ login: !this.state.login })}}>Login Or Register</button>
+                  {LoginRegistration}
+                </div>
+              }
 
             </div>
           )
@@ -201,6 +232,7 @@ class NewProjectHomepage extends React.Component {
 
 const mapStateToProps = (state) => {
   return ({
+    loginStatus: state.manageLogin,
     logged_in: state.manageLogin.logged_in,
     skills: state.manageSkills,
     roles: state.manageRoles,
@@ -212,6 +244,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    login, register,
     push, addProject, clearProject,
     listSkills, addSkill, listRoles, addRole, listInterests, addInterest
   }, dispatch)

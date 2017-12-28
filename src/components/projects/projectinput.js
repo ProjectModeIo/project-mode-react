@@ -1,36 +1,42 @@
 import React, {Component} from 'react';
 import AddToListRelation from '../addtolistrelation'
+import { projectScopeDefaults } from '../../variables/projectdefaults'
+import { stringifyJsonFields, safeParseJson } from '../../utilities'
 
 export default class ProjectInput extends Component {
   constructor(props) {
     super(props);
 
     let inProgress = window.localStorage.getItem("project_in_progress");
+    let savedState = inProgress ? JSON.parse(inProgress) : {};
+
     this.state={
-      title: inProgress ? JSON.parse(inProgress).title : '',
-      description: inProgress ? JSON.parse(inProgress).description : '',
-      roles: inProgress ? JSON.parse(inProgress).roles || [] : [],
-      skills: inProgress ? JSON.parse(inProgress).skills || [] : [],
-      interests: inProgress ? JSON.parse(inProgress).interests || [] : [],
+      title: savedState.title || '',
+      description: savedState.description || '',
+      project_scope: savedState.project_scope || 'passion project',
+      repositories: savedState.repositories || {},
+      roles: savedState.roles || [],
+      skills: savedState.skills || [],
+      interests: savedState.interests || [],
     }
   }
 
-  handleSubmit(event){
-    event.preventDefault()
+  handleSubmit(){
     if (this.validateFields()) {
-      /* prompt user to login if not logged in? */
-      let cleanedFields = this.preparedFields(this.state)
-      this.props.addProject(cleanedFields)
+      this.cleanedProgress = this.preparedFields(this.state)
+      this.saveProgress()
+      this.props.addProject(this.cleanedProgress)
     } else {
       // error status
     }
   }
 
   preparedFields(fields) {
+    fields = stringifyJsonFields(fields, ['repositories'])
     return {...fields,
       roles: fields.roles.map(item => {return { name: item.name }}),
       skills: fields.skills.map(item => {return { name: item.name }}),
-      fields: fields.interests.map(item => {return { name: item.name }})
+      interests: fields.interests.map(item => {return { name: item.name }})
     }
   }
 
@@ -63,7 +69,8 @@ export default class ProjectInput extends Component {
 
   saveProgress() {
     console.log('saved');
-    window.localStorage.setItem("project_in_progress", JSON.stringify(this.state))
+    let lastProgress = this.cleanedProgress || this.state
+    window.localStorage.setItem("project_in_progress", JSON.stringify(lastProgress))
   }
 
   handleChange(field, event){
@@ -77,22 +84,32 @@ export default class ProjectInput extends Component {
 
     return (
       <div className="project-input">
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <input type="title"
-            className="project-input_inputs"
-            onBlur={this.saveProgress.bind(this)}
-            placeholder="My New Project!"
-            value={this.state.title}
-            onChange={this.handleChange.bind(this, "title")} /><br />
-          <textarea
-            className="project-input_inputs"
-            type="description"
-            onBlur={this.saveProgress.bind(this)}
-            placeholder="A cool description"
-            value={this.state.description}
-            onChange={this.handleChange.bind(this, "description")} /><br />
-          <button type="submit">Next</button>
-        </form>
+        <input type="title"
+          className="project-input_inputs"
+          onBlur={this.saveProgress.bind(this)}
+          placeholder="My New Project!"
+          value={this.state.title}
+          onChange={this.handleChange.bind(this, "title")} /><br />
+        <textarea
+          className="project-input_inputs"
+          type="description"
+          onBlur={this.saveProgress.bind(this)}
+          placeholder="A cool description"
+          value={this.state.description}
+          onChange={this.handleChange.bind(this, "description")} /><br />
+        <select
+          onChange={(event)=>{
+              this.setState({
+                project_scope: event.target.value
+              }, ()=> {
+                this.saveProgress()
+              })
+          }}
+          value={this.state.project_scope}>
+          {projectScopeDefaults.map(item => {
+            return (<option>{item}</option>)
+          })}
+        </select>
         <AddToListRelation
           pool = {{ list: roles, action: addRole.bind(this) }}
           relation = {{
@@ -103,6 +120,7 @@ export default class ProjectInput extends Component {
           showList = {true}
           title = "What roles do you need?"
           allowMultiple = {true} />
+        <button onClick={this.handleSubmit.bind(this)} className="next-button" type="submit">Next</button>
       </div>);
   }
 }
