@@ -67,7 +67,7 @@ export const addProjectskill = (project_id, params) => {
   params.project_id = project_id;
 
   return (dispatch) => {
-    api.post('/projectstacks', params)
+    api.post('/projectskills', params)
     .then(({data}) => {
       dispatch({
         type: 'ADD_PROJECT_SKILL',
@@ -83,7 +83,7 @@ export const addProjectskill = (project_id, params) => {
 
 export const deleteProjectskill = (id) => {
   return (dispatch) => {
-    api.delete(`/projectstacks/${id}`)
+    api.delete(`/projectskills/${id}`)
     .then(({data}) => {
       dispatch({
         type: 'DELETE_PROJECT_SKILL',

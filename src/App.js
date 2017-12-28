@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { push } from 'react-router-redux'
 import Nav from './components/nav'
+import ErrorMessage from './components/errormessage.js'
 import RouteHandler from './RouteHandler'
 
 import { clearUser, logout, setUser, loadDefaultView } from './actions/sessionsregistration' // session actions
@@ -19,13 +20,16 @@ class App extends Component {
   }
 
   render() {
+    let {error} = this.props.status
     return (
       <div className="App">
         <Nav />
         <RouteHandler
+          location={this.props.location}
           loaded={this.props.loginStatus.loaded}
           loggedIn={this.props.loginStatus.logged_in}
           />
+        {error ? <ErrorMessage error={error} /> : null}
       </div>
     );
   }

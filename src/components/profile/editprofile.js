@@ -129,12 +129,12 @@ class EditProfile extends React.Component {
               list={account.roles}
               customProps={{ listClass: 'inline-list__wrap', itemClass: 'inline-list__item' }}
               customActions={{ itemClick: deleteUserrole.bind(this), attr: "id" }}
-              catName="type"
+              catName = "name"
               />
             <AddToListRelation
               pool = {{ list: roles, action: addRole.bind(this) }}
               relation = {{ list: account.roles, action: addUserrole.bind(this), delete: deleteUserrole.bind(this) }}
-              catName = "type"
+              catName = "name"
               showList = {false}
               customProps = {{ outerWrapStyle: { display: "inline-block"} }}
               />

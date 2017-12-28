@@ -37,9 +37,16 @@ let initialState = {
 
 let store = createStore(enableBatching(rootReducer), initialState, composeWithDevTools(applyMiddleware(thunk, rMiddleware)));
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Route path='/' component={App} />
-    </Router>
-  </Provider>, document.getElementById('root'));
+if (window.location.href.includes('http://projectmode.io') && window.localStorage.getItem('current_user') !== process.env.REACT_APP_PASSWORD) {
+  ReactDOM.render(
+    <div>
+      :o there's nothing here!
+    </div>, document.getElementById('root'));
+} else {
+  ReactDOM.render(
+    <Provider store={store}>
+      <Router history={history}>
+        <Route path='/' component={App} />
+      </Router>
+    </Provider>, document.getElementById('root'));
+}

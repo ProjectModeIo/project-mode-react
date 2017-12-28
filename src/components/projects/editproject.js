@@ -38,7 +38,7 @@ class EditProject extends Component {
             list: currentProject.roles,
             action: addProjectrole.bind(this, currentProject.id),
             delete: deleteProjectrole.bind(this) }}
-          catName = "type"
+          catName = "name"
           showList = {true}
           title = "What roles do you need?"
           allowMultiple = {true}

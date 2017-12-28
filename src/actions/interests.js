@@ -68,7 +68,7 @@ export const addProjectinterest = (project_id, params) => {
   params.project_id = project_id;
 
   return (dispatch) => {
-    api.post('/projectcategories', params)
+    api.post('/projectinterests', params)
     .then(({data}) => {
       dispatch({
         type: 'ADD_PROJECT_INTEREST',
@@ -84,7 +84,7 @@ export const addProjectinterest = (project_id, params) => {
 
 export const deleteProjectinterest = (id) => {
   return (dispatch) => {
-    api.delete(`/projectcategories/${id}`)
+    api.delete(`/projectinterests/${id}`)
     .then(({data}) => {
       dispatch({
         type: 'DELETE_PROJECT_INTEREST',

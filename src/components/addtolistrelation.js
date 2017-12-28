@@ -8,7 +8,7 @@ import Autocomplete from 'react-autocomplete'
 /*  props:
     pool = {{ list: roles, action: addRole.bind(this) }}
     relation = {{ list: currentProject.roles, action: addProjectrole.bind(this, currentProject.id), delete: deleteProjectrole.bind(this) }}
-    catName = "type"
+    catName = "name"
     title = "What roles do you need?"
     allowMultiple = {true}
     close = {{ action: this.nextStep.bind(this, 3), label: "next"}}
@@ -33,16 +33,16 @@ export default class AddToListRelation extends React.Component {
     let itemName = this.state.itemInput.toLowerCase();
 
     let inList = this.props.pool.list.filter((item) => {
-      return item[this.props.catName].toLowerCase() === itemName.toLowerCase();
+      return item.name.toLowerCase() === itemName.toLowerCase();
     })[0];
 
     if (!inList) {
       // add to redux pool store if new item
-      this.props.pool.action({[this.props.catName]: itemName})
+      this.props.pool.action({name: itemName})
     }
 
     // this.props.addUserskill({type: "front-end development"})
-    this.props.relation.action({[this.props.catName]: itemName});
+    this.props.relation.action({name: itemName});
 
     this.setState({
       itemInput: ''
@@ -56,7 +56,7 @@ export default class AddToListRelation extends React.Component {
   matchStateToTerm(state, value) {
     // debugger;
     return (
-      state[this.props.catName].toLowerCase().indexOf(value.toLowerCase()) !== -1
+      state.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
     )
   }
 
@@ -66,7 +66,7 @@ export default class AddToListRelation extends React.Component {
     let { outerWrapClass, outerWrapStyle, inputClass, inputStyle,
       wrapperClass, wrapperStyle, renderItemClass } = customProps
 
-    let inRelationArr = relation.list.map((item) => item[catName])
+    let inRelationArr = relation.list.map((item) => item.name)
 
     return (
       <div style={outerWrapStyle} className={outerWrapClass}>
@@ -74,11 +74,11 @@ export default class AddToListRelation extends React.Component {
         <Autocomplete
           inputProps={{ className: inputClass, style: inputStyle }}
           wrapperProps={{ className: wrapperClass, style: wrapperStyle || { display: "inline-block" } }}
-          getItemValue={(item) => item[catName]}
-          items={allowMultiple ? pool.list : pool.list.filter((item) => !inRelationArr.includes(item[catName]))}
+          getItemValue={(item) => item.name}
+          items={allowMultiple ? pool.list : pool.list.filter((item) => !inRelationArr.includes(item.name))}
           renderItem={(item, isHighlighted) =>
             <div className={renderItemClass} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-              {item[catName]}
+              {item.name}
             </div>
           }
           shouldItemRender={this.matchStateToTerm.bind(this)}
@@ -90,7 +90,7 @@ export default class AddToListRelation extends React.Component {
         {showList ? relation.list.map((item, index) => {
           return (
             <div key={index}>
-              {item[catName]}
+              {item.name}
               <button onClick={this.deleteItem.bind(this, item.id)}>x</button>
             </div>
           )

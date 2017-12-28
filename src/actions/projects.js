@@ -2,10 +2,15 @@ import api from '../api';
 import {batchActions} from 'redux-batched-actions';
 
 export const addProject = (project_params) => {
+  debugger;
   return (dispatch) => {
     api.post('/projects', { project: project_params })
     .then(({data}) => {
-      window.localStorage.setItem("project_in_progress", JSON.stringify(data.data))
+      // window.localStorage.setItem("project_in_progress", JSON.stringify(data.data))
+      // no longer in progress
+      window.localStorage.removeItem("project_in_progress")
+      // load as current project
+      debugger;
       dispatch(batchActions([
         {
           type: 'LOAD_PROJECT',
@@ -18,26 +23,20 @@ export const addProject = (project_params) => {
       ]))
     })
     .catch((errors) => {
-      debugger;
-    })
-  }
-}
+      /* should already be saved locally */
+      let errMsg = ((error) => {
+        switch(true) {
+          case (error.data && error.data.message === "invalid_token"):
+            return "You must be logged in"
+          default:
+            return "Something went wrong"
+        }
+      })(errors.response)
 
-export const loadInProgressProject = (json) => {
-  return(dispatch) => {
-    api.get(`/projects/${JSON.parse(json).id}`)
-    .then(({data}) => {
       dispatch({
-        type: 'LOAD_PROJECT',
-        payload: data.data
+        type: "ADD_ERROR",
+        payload: errMsg
       })
-    })
-    .catch((errors) => {
-      debugger;
-      return {
-        type: 'LOAD_PROJECT',
-        payload: JSON.parse(json)
-      }
     })
   }
 }

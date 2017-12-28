@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700');
 
 body {
   margin: 0;
   padding: 0;
   font-family: "Montserrat";
+  font-weight: 300;
 }
 
 /* --- DROPDOWN LIST STYLES --- */
@@ -16,4 +17,24 @@ body {
   padding: 3px 6px;
   margin: 2px;
   background-color: #eee
+}
+
+/* color hover input styles */
+.yellow-hover:focus, .yellow-hover:hover {
+  background-color: yellow;
+}
+.green-hover:focus, .green-hover:hover {
+  background-color: #78D956;
+}
+.blue-hover:focus, .blue-hover:hover {
+  background-color: #31B5ED;
+}
+
+input::-webkit-input-placeholder {
+    color: #000;
+    transition: .2s all;
+}
+
+input:hover::-webkit-input-placeholder, input:focus::-webkit-input-placeholder {
+    color: #ccc;
 }

@@ -3,6 +3,8 @@ import { Route, Switch, Link} from 'react-router-dom'
 import { push } from 'react-router-redux'
 import '../styles/home.css'
 
+import NewProjectHomepage from './projects/newprojecthomepage'
+
 export default class Home extends Component {
   constructor(prop) {
     super(prop)
@@ -20,7 +22,7 @@ export default class Home extends Component {
           </p>
         </div>
         <div className="home_banner two">
-          <h1>What's are you working on?</h1>
+          <NewProjectHomepage />
         </div>
       </div>
     );

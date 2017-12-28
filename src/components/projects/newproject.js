@@ -2,8 +2,10 @@ import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { addProject, loadInProgressProject, clearProject } from '../../actions/projects'
-
+import { addProject, clearProject } from '../../actions/projects'
+import { listSkills, addSkill } from '../../actions/skills'
+import { listRoles, addRole } from '../../actions/roles'
+import { listInterests, addInterest } from '../../actions/interests'
 import ProjectInput from './projectinput'
 import EditProject from './editproject'
 
@@ -22,19 +24,22 @@ class NewProject extends React.Component {
         step: 0
       })
     }
+
+    this.props.listSkills();
+    this.props.listRoles();
+    this.props.listInterests();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.currentProject.id && this.state.step < 2) {
-      this.setState({
-        step: 2
-      })
+      this.props.push(`/u/${this.props.currentProject.created_by}/${this.props.currentProject.slug}`)
     }
   }
 
   render() {
     /* variables */
-    let { currentProject, clearProject, loadInProgressProject } = this.props
+    let { currentProject, clearProject, titleLine,
+      roles, addRole, skills, addSkill, interests, addInterest} = this.props
 
     /* steps */
     let step = ((step) => {
@@ -42,30 +47,31 @@ class NewProject extends React.Component {
         case 0:
           return (
             <div>
-              You have a project in progress - would you like to return to it?
+              You have a project in progress - attempt to recover?
+              <button onClick={()=> { this.setState({ step: 1 }) }}>
+                Yes
+              </button>
               <button onClick={()=> {
-                  let inProgress = window.localStorage.getItem("project_in_progress");
-                  if (inProgress){
-                    loadInProgressProject(inProgress)
-                  } else {
-                    this.setState({ step: 1 })
-                  } }}>Yes</button>
-              <button onClick={()=> { clearProject(); this.setState({ step: 1 }) }}>Start a new project</button>
+                  window.localStorage.removeItem("project_in_progress")
+                  this.setState({ step: 1 })
+                }}>
+                Start a new project
+              </button>
             </div>
           )
         case 1:
           return (
             <div>
-              <h1>Create a new project</h1>
+              <h1>{titleLine || "Create a new project"}</h1>
                 <ProjectInput
+                  roles={roles}
+                  skills={skills}
+                  interests={interests}
+                  addRole={addRole.bind(this)}
+                  addSkill={addSkill.bind(this)}
+                  addInterest={addInterest.bind(this)}
                   addProject={this.props.addProject}
                   />
-            </div>
-          )
-        case 2:
-          return (
-            <div>
-              <EditProject />
             </div>
           )
       }
@@ -91,7 +97,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    push, addProject, loadInProgressProject, clearProject,
+    push, addProject, clearProject,
+    listSkills, addSkill, listRoles, addRole, listInterests, addInterest
   }, dispatch)
 }
 

@@ -23,6 +23,11 @@ const Authorization = (allowed, status) => (WrappedComponent) => {
 }
 
 export default class RouteHandler extends Component {
+
+  shouldComponentUpdate(nextProps) {
+    return this.props.loggedIn !== nextProps.loggedIn || this.props.location.pathname !== nextProps.location.pathname
+  }
+
   render() {
     let { loggedIn, loaded } = this.props
     let LoggedIn = Authorization([true], loggedIn)

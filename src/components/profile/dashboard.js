@@ -23,7 +23,7 @@ class Dashboard extends Component {
           You are a
           <ListDisplay
             list={roles}
-            catName="type"
+            catName = "name"
             customProps={{ listClass: 'inline-list__wrap', itemClass: 'inline-list__item' }} />
         </div>
           <div>You have experience with

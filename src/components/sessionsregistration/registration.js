@@ -63,7 +63,7 @@ class Registration extends React.Component {
             <AddToListRelation
               pool = {{ list: roles, action: addRole.bind(this) }}
               relation = {{ list: account.roles, action: addUserrole.bind(this), delete: deleteUserrole.bind(this) }}
-              catName = "type"
+              catName = "name"
               title = "What's your role?"
               close = {{ action: this.nextStep.bind(this, 3), label: "next"}}
               />

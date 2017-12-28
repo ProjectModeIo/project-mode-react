@@ -19,13 +19,13 @@ class ShowProject extends Component {
 
   componentWillMount() {
     let { slug, id } = this.props.match.params
-    // debugger;
+    
     if (id) {
       this.props.loadProject(id);
     } else if (slug) {
-      // debugger;
       this.props.loadProjectBySlug(slug);
     }
+    // eventually check query params for editing maybe??
   }
 
   componentWillReceiveProps(nextProps) {
