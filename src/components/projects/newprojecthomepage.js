@@ -155,7 +155,7 @@ class NewProjectHomepage extends React.Component {
                   style={interestInputStyle} />
                 community.
               </h2>
-              <button onClick={()=>{
+              <button className="next-button" onClick={()=>{
                   this.generateProject();
                   this.setState({ step: 2 })}}>
                 Let's get to work
@@ -163,9 +163,13 @@ class NewProjectHomepage extends React.Component {
             </div>
           )
         case 2:
-          return(            
-            <div>
+          return(
+            <div className="edit-homepage_header">
               <h1>{this.state.savedDraft ? "We saved your progress!":"Fine-tune your project"}</h1>
+              <p>
+                Tell us more about your project!  What technologies and techniques do you use?<br />
+                Who is the targeted audience?  What are you looking for in collaborators?
+              </p>
               <ProjectInput
                 roles={roles}
                 skills={skills}

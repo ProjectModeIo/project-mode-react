@@ -6,7 +6,7 @@
   background-color: #ccc;
 }
 .home_banner {
-  padding: 40px 50px;
+  padding: 60px 60px;
 }
 
 .home_banner h1 {
@@ -15,10 +15,16 @@
   padding: 0;
 }
 
+.home_banner p {
+  font-size: 22px;
+  line-height: 30px;
+}
+
 .edit-homepage_header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 .edit-homepage_header h2 {
@@ -26,7 +32,7 @@
   font-weight: 400;
 }
 
-.edit-homepage_header button {
+.edit-homepage_header .next-button {
   background-color: #56DCE1;
   ouline: none;
   border: 0;
@@ -56,4 +62,13 @@
   font-family: "Montserrat";
   font-weight: 700;
   transition: .5s all;
+}
+
+.edit-homepage_input:hover {
+  cursor: pointer;
+}
+
+.edit-homepage_input:focus {
+  cursor: none;
+  background-color: #ccc !important;
 }

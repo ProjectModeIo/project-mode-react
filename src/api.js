@@ -1,5 +1,5 @@
 import axios from 'axios'
-const API = process.env.REACT_APP_API_URL;
+const API = process.env.REACT_APP_API_URL_PROD;
 
 function headers() {
   const token = localStorage.getItem('current_user')
