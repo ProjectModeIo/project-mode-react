@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import '../styles/nav.css';
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { push } from 'react-router-redux'
 
 class Nav extends Component {
@@ -16,14 +16,17 @@ class Nav extends Component {
 
     let loggedOutLinks = [
       <Link className="navbar_link" to={'/login'}>login</Link>,
-      <Link className="navbar_link" to={'/registration'}>registration</Link>
+      <Link className="navbar_link" to={'/registration'}>register</Link>
     ]
 
     return (
       <div className="Nav">
         <Link className="navbar_link" to={'/'}>PM[logo]</Link>
         <Link className="navbar_link" to="/projects">Projects</Link>
-        {loggedIn ? loggedInLinks.map(link => link) : loggedOutLinks.map(link => link)}
+        <Link className="navbar_link" to="/channels">Channels</Link>
+        <div className="end">
+          {loggedIn ? loggedInLinks.map(link => link) : loggedOutLinks.map(link => link)}
+        </div>
       </div>
     );
   }

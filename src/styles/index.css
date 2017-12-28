@@ -38,3 +38,18 @@ input::-webkit-input-placeholder {
 input:hover::-webkit-input-placeholder, input:focus::-webkit-input-placeholder {
     color: #ccc;
 }
+
+/* index page stuff - maybe move to a more generic location */
+.index-page {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+.main-content {
+  flex: 2;
+}
+
+.sidebar {
+  flex: 1;
+}

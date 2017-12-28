@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
 import { push } from 'react-router-redux'
 import { register } from '../../actions/sessionsregistration'
-import { listSkills, addUserskill, deleteUserskill, addSkill } from '../../actions/skills'
-import { listRoles, addUserrole, deleteUserrole, addRole } from '../../actions/roles'
-import { listInterests, addUserinterest, deleteUserinterest, addInterest } from '../../actions/interests'
+import { addUserskill, deleteUserskill, addSkill } from '../../actions/skills'
+import { addUserrole, deleteUserrole, addRole } from '../../actions/roles'
+import { addUserinterest, deleteUserinterest, addInterest } from '../../actions/interests'
 
 import AccountInput from './accountinput'
 import AddToListRelation from '../addtolistrelation'
@@ -23,10 +23,6 @@ class Registration extends React.Component {
     if (this.props.token) {
       this.props.push('/user/dashboard')
     }
-
-    this.props.listSkills();
-    this.props.listRoles();
-    this.props.listInterests();
   }
 
   // componentDidUpdate(prevProps, prevState) {
@@ -131,13 +127,13 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     push, register,
     /* SKILL */
-    addSkill, listSkills,
+    addSkill,
     deleteUserskill, addUserskill, //user
     /* ROLE */
-    addRole, listRoles,
+    addRole,
     deleteUserrole, addUserrole, //user
     /* INTEREST */
-    addInterest, listInterests,
+    addInterest,
     deleteUserinterest, addUserinterest, //user
   }, dispatch)
 }

@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { addProject, clearProject } from '../../actions/projects'
-import { listSkills, addSkill } from '../../actions/skills'
-import { listRoles, addRole } from '../../actions/roles'
-import { listInterests, addInterest } from '../../actions/interests'
+import { addSkill } from '../../actions/skills'
+import { addRole } from '../../actions/roles'
+import { addInterest } from '../../actions/interests'
 import { login, register } from '../../actions/sessionsregistration'
 
 import ProjectInput from './projectinput'
@@ -246,7 +246,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     login, register,
     push, addProject, clearProject,
-    listSkills, addSkill, listRoles, addRole, listInterests, addInterest
+    addSkill, addRole, addInterest
   }, dispatch)
 }
 

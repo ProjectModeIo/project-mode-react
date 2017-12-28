@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import '../../styles/profile.css'
 import { editProfile } from '../../actions/user'
-import { listSkills, addUserskill, deleteUserskill, addSkill } from '../../actions/skills'
-import { listRoles, addUserrole, deleteUserrole, addRole } from '../../actions/roles'
-import { listInterests, addUserinterest, deleteUserinterest, addInterest } from '../../actions/interests'
+import { addUserskill, deleteUserskill, addSkill } from '../../actions/skills'
+import { addUserrole, deleteUserrole, addRole } from '../../actions/roles'
+import { addUserinterest, deleteUserinterest, addInterest } from '../../actions/interests'
 
 import AddToListRelation from '../addtolistrelation'
 import ListDisplay from '../listdisplay'
@@ -21,12 +21,6 @@ class EditProfile extends React.Component {
       lastname: '',
       tagline: ''
     }
-  }
-
-  componentWillMount(){
-    this.props.listSkills();
-    this.props.listRoles();
-    this.props.listInterests();
   }
 
   componentDidUpdate() {
@@ -193,13 +187,13 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     push, editProfile,
     /* SKILL */
-    addSkill, listSkills,
+    addSkill,
     deleteUserskill, addUserskill, //user
     /* ROLE */
-    addRole, listRoles,
+    addRole,
     deleteUserrole, addUserrole, //user
     /* INTEREST */
-    addInterest, listInterests,
+    addInterest,
     deleteUserinterest, addUserinterest, //user
   }, dispatch)
 }

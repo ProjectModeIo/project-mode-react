@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import '../styles/projects.css';
-import ListProjects from './projects/listprojects'
+import '../../styles/projects.css';
+import ListProjects from './listprojects'
 
 class ProjectFeed extends Component {
   loggedInProjectFeed() {
@@ -42,8 +42,16 @@ class ProjectFeed extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.account.id ? this.loggedInProjectFeed() : this.notLoggedInProjectFeed()}
+      <div className="index-page">
+        <div className="main-content">
+          <h2>Browse</h2>
+          (add filter/sorting)
+          {this.props.account.id ? this.loggedInProjectFeed() : this.notLoggedInProjectFeed()}
+        </div>
+        <div className="sidebar">
+          sidebar component - if logged in, maybe a feed or messages - closable/minify
+          maybe move to the App level
+        </div>
       </div>
     )
   }

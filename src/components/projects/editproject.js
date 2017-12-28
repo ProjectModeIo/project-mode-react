@@ -5,20 +5,14 @@ import { Link } from 'react-router-dom'
 import { push } from 'react-router-redux'
 
 /* actions */
-import { listSkills, addSkill, addProjectskill, deleteProjectskill } from '../../actions/skills'
-import { listRoles, addRole, addProjectrole, deleteProjectrole } from '../../actions/roles'
-import { listInterests, addInterest, addProjectinterest, deleteProjectinterest } from '../../actions/interests'
+import { addSkill, addProjectskill, deleteProjectskill } from '../../actions/skills'
+import { addRole, addProjectrole, deleteProjectrole } from '../../actions/roles'
+import { addInterest, addProjectinterest, deleteProjectinterest } from '../../actions/interests'
 import { addProject, loadProject, loadProjectBySlug } from '../../actions/projects'
 
 import AddToListRelation from '../addtolistrelation'
 
 class EditProject extends Component {
-
-  componentWillMount(){
-    this.props.listSkills();
-    this.props.listRoles();
-    this.props.listInterests();
-  }
 
   render() {
     /* variables */
@@ -82,9 +76,9 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     push, addProject,
     loadProject, loadProjectBySlug,
-    listSkills, addSkill, addProjectskill, deleteProjectskill,
-    listRoles, addRole, addProjectrole, deleteProjectrole,
-    listInterests, addInterest, addProjectinterest, deleteProjectinterest
+    addSkill, addProjectskill, deleteProjectskill,
+    addRole, addProjectrole, deleteProjectrole,
+    addInterest, addProjectinterest, deleteProjectinterest
   }, dispatch)
 }
 

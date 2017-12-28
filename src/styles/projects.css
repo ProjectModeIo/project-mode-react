@@ -5,8 +5,8 @@
 
 .project-list_item {
   background-color: #eee;
-  margin-top: 5px;
-  padding: 5px;
+  margin-bottom: 5px;
+  padding: 20px 50px;
 }
 
 .project-list_item.is-owner {

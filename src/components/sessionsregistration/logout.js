@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { clearUser, logout, loadDefaultView } from '../../actions/sessionsregistration'
+import { clearUser, logout, loadAllThings } from '../../actions/sessionsregistration'
 
 class Logout extends Component {
 
   componentDidMount(){
-    this.props.clearUser();
     this.props.logout();
-    this.props.loadDefaultView();
+    this.props.loadAllThings();
     this.props.push('/')
   }
 
@@ -28,7 +27,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ push, clearUser, logout, loadDefaultView }, dispatch)
+  return bindActionCreators({ push, clearUser, logout, loadAllThings }, dispatch)
 }
 
 const ConnectedLogout = connect(mapStateToProps, mapDispatchToProps)(Logout)

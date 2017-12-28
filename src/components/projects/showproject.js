@@ -19,7 +19,7 @@ class ShowProject extends Component {
 
   componentWillMount() {
     let { slug, id } = this.props.match.params
-    
+
     if (id) {
       this.props.loadProject(id);
     } else if (slug) {
@@ -30,6 +30,7 @@ class ShowProject extends Component {
 
   componentWillReceiveProps(nextProps) {
     let { slug, id } = nextProps.match.params
+
     if (slug) {
       if (this.props.match.params.slug !== slug) {
         // debugger;

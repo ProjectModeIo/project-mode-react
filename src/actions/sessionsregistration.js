@@ -100,16 +100,21 @@ export const clearUser = () =>{
 
 export const logout = () => {
   window.localStorage.removeItem("current_user")
-  // api.delete('/sessions')
-  // .then(({data}) => {
-  //   debugger;
-  // })
-  // .catch((errors) => {
-  //   debugger;
-  // })
-  return{
-    type: "LOGOUT"
-  }
+
+  return batchActions([
+    {
+      type: "CLEAR_USER"
+    },
+    {
+      type: "CLEAR_FEED"
+    },
+    {
+      type: "LOGOUT"
+    },
+    {
+      type: "CLEAR_CHANNELS"
+    }
+  ])
 }
 
 /* LOAD USER or non-user */
@@ -121,7 +126,11 @@ export function setUser(token){
         dispatch(batchActions([
           {
             type: "LOAD_FEED",
-            payload: data.feed
+            payload: data.feed // this loads user specific feeds
+          },
+          {
+            type: "LOAD_CHANNELS",
+            payload: data.channels  // loads user subscribed channels
           },
           {
             type: "LOAD_USER",
@@ -129,10 +138,7 @@ export function setUser(token){
           },
           {
             type: "SET_LOGIN_STATUS",
-            payload: {
-              logged_in: true,
-              loaded: true
-            }
+            payload: { logged_in: true }
           }
         ]))
       })
@@ -151,28 +157,24 @@ export function setUser(token){
   }
 }
 
-export const loadDefaultView = () => {
+export const loadAllThings = () => {
   return (dispatch) => {
-    api.get('/projects')
+    api.get('/load')
     .then(({data}) => {
       dispatch(batchActions([
         {
           type: "LOAD_FEED",
-          payload: {
-            projects_all: data.data
-          }
+          payload: data.feed // this loads projects_all
+        },
+        {
+          type: "LOAD_CHANNELS",
+          payload: data.channels // loads general channels
         },
         {
           type: "SET_LOGIN_STATUS",
-          payload: {
-            logged_in: false,
-            loaded: true
-          }
+          payload: { loaded: true }
         }
       ]))
-    })
-    .catch((errors) => {
-      debugger;
     })
   }
 }

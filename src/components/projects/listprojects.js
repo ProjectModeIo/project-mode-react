@@ -46,7 +46,7 @@ class ListProjectItem extends Component {
   }
 
   render() {
-    let { title, created_by, slug } = this.props.item
+    let { title, description, created_by, slug } = this.props.item
 
     let time_ago_english = new javascript_time_ago('en-US')
     let inserted_at = time_ago_english.format(new Date(this.props.item.inserted_at))
@@ -60,9 +60,10 @@ class ListProjectItem extends Component {
       <div onClick={this.handleClick.bind(this)} className={`project-list_item ${isProjectCreator ? 'is-owner' : ''}`}>
         <Link to={`/u/${created_by}/${slug}`} >{title}</Link>
         <span className="project-list_meta-data">posted by {created_by} {inserted_at}</span>
+        <div>{description}</div>
         <div>
-        {this.state.expanded ? <div>EXPAND</div>:null}
-      </div>
+          {this.state.expanded ? <div>EXPAND</div>:null}
+        </div>
       </div>
     )
   }
