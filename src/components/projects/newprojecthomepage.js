@@ -40,6 +40,7 @@ class NewProjectHomepage extends React.Component {
     this.state = {
       login: false,
       savedDraft: false,
+      adding: false,
       step: "introStep",
       params: null,
       form: {
@@ -73,9 +74,12 @@ class NewProjectHomepage extends React.Component {
     if (this.state.step == "loginStep" && this.props.logged_in) {
       if (this.props.currentProject.id) {
         this.props.push(`/u/${this.props.currentProject.created_by}/${this.props.currentProject.slug}`)
-      } else {
+      } else if (!this.state.adding) {
         let params = this.state.params || JSON.parse(window.localStorage.getItem('project_in_progress'))
         this.props.addProject(params)
+        this.setState({
+          adding: true
+        })
       }
     }
   }
@@ -97,6 +101,9 @@ class NewProjectHomepage extends React.Component {
 
     if (this.props.logged_in) {
       this.props.addProject(params)
+      this.setState({
+        adding: true
+      })
     }
   }
 

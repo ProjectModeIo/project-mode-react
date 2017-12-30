@@ -3,22 +3,46 @@ import {  bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 // import { push } from 'react-router-redux'
+import { addGithubAccount } from '../../actions/callbacks'
 
 import ListDisplay from '../listdisplay'
 import ListProjects from '../projects/listprojects'
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props)
+    this.githubUpdated = this.githubUpdated.bind(this)
+  }
+
+  componentWillMount() {
+    window.addEventListener("message", this.githubUpdated)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("message", this.githubUpdated)
+  }
+
+  githubUpdated(msg) {
+    if (msg.data.access_token_from_oauth) {
+      this.props.addGithubAccount(msg.data);
+      msg.source.postMessage("close","*")
+    }
+  }
 
   render() {
     let { username,
       email, firstname, lastname, tagline,
       interests, roles, skills,
-      created_projects } = this.props.account
+      created_projects, github_access_token } = this.props.account
+    let githubUrl = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`;
 
     return (
       <div className="Dashboard">
         <h1>Hi, {firstname}</h1>
         <p>{tagline}</p>
+        {github_access_token ? "Github Connected!":<button onClick={()=>{
+            window.open(githubUrl, "Github Oauth", "width=500px,height=500px")
+          }}>test</button>}
         <div>
           You are a
           <ListDisplay
@@ -57,6 +81,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     // push
+    addGithubAccount
   }, dispatch)
 }
 

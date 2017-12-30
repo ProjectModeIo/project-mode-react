@@ -1,9 +1,11 @@
 .one {
-  background-color: #ddd;
+  /* background-color: #ddd; */
+  background-color: #FCFB7E;
 }
 
 .two {
-  background-color: #ccc;
+  background-color: #3DADE2;
+  /* background-color: #ccc; */
 }
 .home_banner {
   padding: 60px 60px;
@@ -52,7 +54,7 @@
 
 .edit-homepage_input {
   border: none;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 3px solid #fff;
   outline: none;
   background: none;
   font-size: 24px;
@@ -70,5 +72,5 @@
 
 .edit-homepage_input:focus {
   cursor: none;
-  background-color: #ccc !important;
+  background-color: #3DADE2 !important;
 }

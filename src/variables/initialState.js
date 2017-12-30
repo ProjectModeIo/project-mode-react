@@ -6,6 +6,18 @@ const initialState = {
     skills: [],
     interests: [],
     created_projects: [],
+    github_access_token: window.localStorage.getItem("github_access_token"),
+    github_account_info: {}
+  },
+  manageCurrentProfile: {
+    username: '',
+    firstname: '',
+    lastname: '',
+    tagline: '',
+    created_projects: [],
+    roles: [],
+    skills: [],
+    interests: []
   },
   manageFeed: {
     projects_interest_related: [],

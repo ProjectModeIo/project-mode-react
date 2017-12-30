@@ -8,7 +8,7 @@ import { push } from 'react-router-redux'
 import { addSkill, addProjectskill, deleteProjectskill } from '../../actions/skills'
 import { addRole, addProjectrole, deleteProjectrole } from '../../actions/roles'
 import { addInterest, addProjectinterest, deleteProjectinterest } from '../../actions/interests'
-import { addProject, loadProject, loadProjectBySlug } from '../../actions/projects'
+import { addProject, loadProject, loadProjectBySlug, github } from '../../actions/projects'
 
 import AddToListRelation from '../addtolistrelation'
 
@@ -24,6 +24,7 @@ class EditProject extends Component {
 
     return (
       <div>
+        <button onClick={this.props.github}>click meee</button>
         <h1>{currentProject.title}</h1>
         <p>{currentProject.description}</p>
         <AddToListRelation
@@ -74,7 +75,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    push, addProject,
+    push, addProject, github,
     loadProject, loadProjectBySlug,
     addSkill, addProjectskill, deleteProjectskill,
     addRole, addProjectrole, deleteProjectrole,

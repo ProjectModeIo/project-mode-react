@@ -11,6 +11,10 @@ let defaultState = {
 export const manageAccount = (state=defaultState, action) => {
   switch (action.type) {
     case "LOAD_USER":
+      let userdata = action.payload
+      if (userdata.github_account_info && userdata.github_account_info.user_info_json) {
+        userdata.github_account_info = JSON.parse(userdata.github_account_info.user_info_json)
+      }
       return Object.assign({}, state, action.payload)
     case "CLEAR_USER":
       return defaultState
@@ -37,6 +41,11 @@ export const manageAccount = (state=defaultState, action) => {
         return item.id !== action.payload
       })
       return Object.assign({}, state, {interests: newInterests})
+    case "ADD_GITHUB_ACCOUNT":
+      let user_info = JSON.parse(action.payload.account.user_info_json)
+      return {...state,
+        github_access_token: action.payload.access_token_from_oauth,
+        github_account_info: user_info }
     default:
       return state
   }

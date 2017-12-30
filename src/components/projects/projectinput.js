@@ -14,7 +14,6 @@ export default class ProjectInput extends Component {
       title: savedState.title || '',
       description: savedState.description || '',
       project_scope: savedState.project_scope || 'passion project',
-      repositories: savedState.repositories || {},
       roles: savedState.roles || [],
       skills: savedState.skills || [],
       interests: savedState.interests || [],
@@ -32,7 +31,6 @@ export default class ProjectInput extends Component {
   }
 
   preparedFields(fields) {
-    fields = stringifyJsonFields(fields, ['repositories'])
     return {...fields,
       roles: fields.roles.map(item => {return { name: item.name }}),
       skills: fields.skills.map(item => {return { name: item.name }}),

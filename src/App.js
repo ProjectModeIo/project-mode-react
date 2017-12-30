@@ -19,6 +19,9 @@ class App extends Component {
       this.props.setUser(this.props.token)
     }
 
+    /* get the code query param from github */
+    window.localStorage.setItem('github_code', this.props.location.search);
+
     /* load all the things!! */
     this.props.loadAllThings();
     // eventually move these to loadAllThings maybe...

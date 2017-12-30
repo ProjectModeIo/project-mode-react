@@ -2,9 +2,11 @@ import api from '../api';
 import {batchActions} from 'redux-batched-actions';
 
 export const addProject = (project_params) => {
+  debugger;
   return (dispatch) => {
     api.post('/projects', { project: project_params })
     .then(({data}) => {
+      debugger;
       window.localStorage.removeItem("project_in_progress")
       // remove in progress and load as current project
       dispatch(batchActions([
@@ -19,6 +21,7 @@ export const addProject = (project_params) => {
       ]))
     })
     .catch((errors) => {
+      debugger;
       /* should already be saved locally */
       let errMsg = ((error) => {
         switch(true) {
@@ -99,6 +102,24 @@ export const submitComment = (project_id, params) => {
         type: "ADD_ERROR",
         payload: errMsg
       })
+    })
+  }
+}
+
+/* github stuff - move later */
+export const github = (data) => {
+  let githubData = {
+    project_id: 3,
+    repo: "corkly-react",
+    user: "mwei2509"
+  }
+  return (dispatch) => {
+    api.post('/github', githubData)
+    .then(({data}) => {
+      debugger;
+    })
+    .catch((errors) => {
+      debugger;
     })
   }
 }

@@ -27,7 +27,8 @@ body {
   background-color: #78D956;
 }
 .blue-hover:focus, .blue-hover:hover {
-  background-color: #31B5ED;
+  /* background-color: #31B5ED; */
+  background-color: #B273CD;
 }
 
 input::-webkit-input-placeholder {
@@ -36,7 +37,7 @@ input::-webkit-input-placeholder {
 }
 
 input:hover::-webkit-input-placeholder, input:focus::-webkit-input-placeholder {
-    color: #ccc;
+    color: #4D9DD0;
 }
 
 /* index page stuff - maybe move to a more generic location */

@@ -17,6 +17,10 @@ import ChannelIndex from './components/channels/channelindex'
 // profile
 import Dashboard from './components/profile/dashboard'
 import EditProfile from './components/profile/editprofile'
+import UserProfile from './components/profile/userprofile'
+
+// callbacks
+import Github from './components/callbacks/github'
 
 import Home from './components/home'
 
@@ -56,10 +60,12 @@ export default class RouteHandler extends Component {
           <Route exact path='/u/edit' component={LoggedIn(EditProfile)} />
           <Route exact path='/u/dashboard' component={LoggedIn(Dashboard)} />
           <Route exact path='/u/:username/:slug' component={AllAccess(ShowProject)} />
+          <Route exact path='/u/:username' component={AllAccess(UserProfile)} />
 
           <Route exact path='/user/edit' component={LoggedIn(EditProfile)} />
           <Route exact path='/user/dashboard' component={LoggedIn(Dashboard)} />
           <Route exact path='/user/:username/:slug' component={AllAccess(ShowProject)} />
+          <Route exact path='/user/:username' component={AllAccess(UserProfile)} />
 
           {/* PROJECT */}
           <Route exact path='/projects' component={AllAccess(ProjectFeed)} />
@@ -73,6 +79,9 @@ export default class RouteHandler extends Component {
           <Route exact path='/c/:name' component={AllAccess(ShowChannel)} />
 
           <Route exact path='/channel/:name' component={AllAccess(ShowChannel)} />
+
+          {/* CALLBACKS */}
+          <Route exact path="/github" component={LoggedIn(Github)} />
           <Route path='/' component={Home} />
         </Switch>
       </div>
