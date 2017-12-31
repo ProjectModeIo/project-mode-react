@@ -1,5 +1,6 @@
 import {batchActions} from 'redux-batched-actions';
 import api from '../api';
+import { Socket } from 'phoenix'
 
 /* register */
 
@@ -75,11 +76,7 @@ export const login = (user_params) => {
     })
     .catch((errors) => {
       let error = (errors && errors.response && errors.response.data && errors.response.data.error) || "An error has occurred!";
-      // dispatch({
-      //   type: 'SET_STATUS',
-      //   payload: error
-      // })
-      // debugger;
+
       dispatch({
         type: "ADD_ERROR",
         payload: error
@@ -100,7 +97,7 @@ export const clearUser = () =>{
 
 export const logout = () => {
   window.localStorage.removeItem("current_user")
-
+  /* add all clean-up here */
   return batchActions([
     {
       type: "CLEAR_USER"
@@ -175,6 +172,28 @@ export const loadAllThings = () => {
           payload: { loaded: true }
         }
       ]))
+    })
+  }
+}
+
+
+/* websocket */
+let api_url = process.env.REACT_APP_API_URL;
+const WEBSOCKET_URL = api_url.replace(/(https|http)/,'ws').replace('/api/v1','')
+
+export const connectToSocket = () => {
+  return (dispatch) => {
+    let token = localStorage.getItem('current_user')
+    let socket = new Socket(`${WEBSOCKET_URL}/socket`, {
+      params: { token },
+      logger: (kind, msg, data) => {
+        console.log(`${kind}: ${msg}`, data)
+      }
+    });
+    socket.connect()
+    dispatch({
+      type: 'SOCKET_CONNECTED',
+      payload: socket
     })
   }
 }

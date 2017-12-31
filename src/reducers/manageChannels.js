@@ -19,6 +19,8 @@ export const manageChannels = (state=defaultState, action) => {
     case "LOAD_SUBSCRIBED_CHANNELS":
       /* this should be loaded in setUser */
       return {...state, subscribedChannels: action.payload}
+    case "CLEAR_CURRENT_CHANNEL":
+      return {...state, currentChannel: {}}
     default:
       return state
   }

@@ -9,6 +9,10 @@
 }
 .home_banner {
   padding: 60px 60px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .home_banner h1 {
@@ -65,6 +69,34 @@
   font-weight: 700;
   transition: .5s all;
 }
+
+.account-input_input {
+  margin: 5px;
+  padding: 7px;
+  min-width: 400px;
+  text-align: left;
+  color: #fff;
+}
+
+.account-input_input-wrap {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.input-status {
+  display: block;
+  position: absolute;
+  right: 5px;
+  bottom: 10px;
+  font-size: 14px;
+}
+
+.input-status_message {
+  padding-left: 4px;
+}
+
+
 
 .edit-homepage_input:hover {
   cursor: pointer;

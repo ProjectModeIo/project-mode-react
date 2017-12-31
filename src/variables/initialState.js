@@ -28,8 +28,16 @@ const initialState = {
   },
   manageChannels: {
     currentChannel: {},
+    currentChannelRoom: {},
+    messages: [],
+    channel: null,
     allChannels: [],
     subscribedChannels: []
+  },
+  manageRooms: {
+    channels: {},
+    teams: {},
+    convos: {}
   },
   manageCurrentProject: {
     title: '',
@@ -41,7 +49,8 @@ const initialState = {
   manageLogin: {
     token: window.localStorage.getItem("current_user"),
     logged_in: false,
-    loaded: false
+    loaded: false,
+    socket: null,
   },
   manageRoles: [],
   manageSkills: [],

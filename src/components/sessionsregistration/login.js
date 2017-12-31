@@ -36,11 +36,15 @@ class Login extends Component {
 
   render() {
     return (
-      <LoginInput
-        loginStatus={this.props.loginStatus}
-        status={this.props.status}
-        login={this.props.login}
-        />);
+      <div className="home_banner two">
+        <LoginInput
+          loginStatus={this.props.loginStatus}
+          status={this.props.status}
+          login={this.props.login}
+          />
+        <Link to={'/registration'} >Don't have an account?  Register!</Link>
+      </div>
+    );
   }
 }
 

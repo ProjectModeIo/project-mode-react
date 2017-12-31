@@ -8,3 +8,19 @@
   padding: 0 5px;
   margin: 0 3px;
 }
+
+.profile-page {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+.account-github {
+  background-color: #eee;
+  padding: 10px;
+}
+
+.github_avatar {
+  width: 100px;
+  border-radius: 10px;
+}

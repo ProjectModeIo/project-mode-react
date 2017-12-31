@@ -17,9 +17,9 @@ class EditProfile extends React.Component {
 
     this.state = {
       unsavedChanges: false,
-      firstname: '',
-      lastname: '',
-      tagline: ''
+      firstname: props.account.firstname || '',
+      lastname: props.account.lastname || '',
+      tagline: props.account.tagline || ''
     }
   }
 
@@ -77,7 +77,7 @@ class EditProfile extends React.Component {
       skills, addSkill, addUserskill, deleteUserskill,
       interests, addInterest, addUserinterest, deleteUserinterest } = this.props
 
-    let { username, email } = this.props.account
+    let { username, email, firstname, lastname } = this.props.account
 
     /* styles - move over to classes */
     let fnameStyle = {

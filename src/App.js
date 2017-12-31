@@ -7,7 +7,7 @@ import Nav from './components/nav'
 import ErrorMessage from './components/errormessage.js'
 import RouteHandler from './RouteHandler'
 
-import { clearUser, logout, setUser, loadAllThings } from './actions/sessionsregistration' // session actions
+import { clearUser, logout, setUser, loadAllThings, connectToSocket } from './actions/sessionsregistration' // session actions
 import { listSkills } from './actions/skills'
 import { listRoles } from './actions/roles'
 import { listInterests } from './actions/interests'
@@ -17,6 +17,7 @@ class App extends Component {
   componentWillMount(){
     if (this.props.token) {
       this.props.setUser(this.props.token)
+      this.props.connectToSocket()
     }
 
     /* get the code query param from github */
@@ -28,6 +29,12 @@ class App extends Component {
     this.props.listSkills();
     this.props.listRoles();
     this.props.listInterests();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.token && nextProps.token) {
+      this.props.connectToSocket();
+    }
   }
 
   render() {
@@ -57,7 +64,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    push, loadAllThings,
+    push, loadAllThings, connectToSocket,
     listSkills, listRoles, listInterests, // list all the things
     clearUser, logout, setUser // session actions
   }, dispatch)

@@ -7,6 +7,7 @@ import { register } from '../../actions/sessionsregistration'
 import { addUserskill, deleteUserskill, addSkill } from '../../actions/skills'
 import { addUserrole, deleteUserrole, addRole } from '../../actions/roles'
 import { addUserinterest, deleteUserinterest, addInterest } from '../../actions/interests'
+import '../../styles/home.css'
 
 import AccountInput from './accountinput'
 import AddToListRelation from '../addtolistrelation'
@@ -24,14 +25,6 @@ class Registration extends React.Component {
       this.props.push('/user/dashboard')
     }
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (!prevProps.account.firstname && this.props.account.firstname && this.state.step === 1) {
-  //     this.setState({
-  //       step: 2
-  //     })
-  //   }
-  // }
 
   componentWillReceiveProps(nextProps){
     if (nextProps.token){
@@ -56,10 +49,17 @@ class Registration extends React.Component {
     let step = ((step)=>{
       switch(step){
         case 1:
-          return (<AccountInput
-            token={this.props.token}
-            register={this.props.register}
-            />)
+          return (
+            <div>
+              <h1>Start your projects today!</h1>
+              <p>Sign up in seconds and start collaborating!</p>
+              <AccountInput
+                token={this.props.token}
+                register={this.props.register}
+                />
+              <Link to={'/login'} >Already have an account?  Login!</Link>
+            </div>
+        )
         case 2:
           return (<div>
             <h1>Welcome, {account.firstname ? account.firstname.charAt(0).toUpperCase() + account.firstname.slice(1) : null}, what are your roles?</h1>
@@ -103,9 +103,8 @@ class Registration extends React.Component {
     })(this.state.step);
 
     return (
-      <div>
+      <div className="home_banner two">
         {step}
-        hello
         {this.props.status.error ? <div>{this.props.status.error}</div>: null}
       </div>);
   }

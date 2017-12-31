@@ -26,13 +26,19 @@ export default class LoginInput extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Log In</h3>
+      <div className="account-input edit-homepage_header">
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <input placeholder="Email" type="email" value={this.state.email} onChange={this.handleChange.bind(this, "email")}  /><br />
-          <input placeholder="Password" type="password" value={this.state.password} onChange={this.handleChange.bind(this, "password")} /><br />
-          <button type="submit">Log In</button>
+          <input
+            className="account-input_input edit-homepage_input yellow-hover"
+            placeholder="Email" type="email" value={this.state.email} onChange={this.handleChange.bind(this, "email")}  /><br />
+          <input
+            className="account-input_input edit-homepage_input yellow-hover"
+            placeholder="Password" type="password" value={this.state.password} onChange={this.handleChange.bind(this, "password")} /><br />
+          <button
+            className="next-button"
+            type="submit">Log In</button>
         </form>
+
         {this.props.status.error ? <div>{this.props.status.error}</div>: null}
       </div>);
   }

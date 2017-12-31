@@ -23,6 +23,15 @@ export function safeParseJson(json, defaultVal) {
   }
 }
 
+export function nameToSlug(name) {
+  /* only use for role/skill/interest/channel name, those only allow alpha chars and spaces */
+  return name.replace(/[ ]/g,'-');
+}
+
+export function slugToName(slug) {
+  return slug.replace(/[-]/g,' ');
+}
+
 export const queryParams = {
   parse: (string) => {
     let obj = {};
@@ -55,4 +64,11 @@ export const queryParams = {
       return val
     }
   }
+}
+
+export const titleize = (string) => {
+  let strArr = string.toLowerCase().replace(/[_]/g,' ').split(' ');
+  return strArr.map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }).join(' ')
 }

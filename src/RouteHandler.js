@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
+
 // sessions
 import Login from './components/sessionsregistration/login'
 import Logout from './components/sessionsregistration/logout'
@@ -13,6 +14,7 @@ import ShowProject from './components/projects/showproject'
 // channels
 import ShowChannel from './components/channels/showchannel'
 import ChannelIndex from './components/channels/channelindex'
+import ChannelRoom from './components/channels/channelroom'
 
 // profile
 import Dashboard from './components/profile/dashboard'
@@ -39,6 +41,7 @@ const Authorization = (allowed, status) => (WrappedComponent) => {
 export default class RouteHandler extends Component {
 
   shouldComponentUpdate(nextProps) {
+    // debugger;
     return this.props.loggedIn !== nextProps.loggedIn || this.props.location.pathname !== nextProps.location.pathname
   }
 
@@ -76,14 +79,17 @@ export default class RouteHandler extends Component {
 
           {/* CHANNELS */}
           <Route exact path='/channels' component={AllAccess(ChannelIndex)} />
-          <Route exact path='/c/:name' component={AllAccess(ShowChannel)} />
+          // <Route exact path='/c/room/:id' component={LoggedIn(ChannelRoom)} />
+          // <Route exact path='/c/:name/room' component={LoggedIn(ChannelRoom)} />
+          <Route exact path='/c/:slug' component={AllAccess(ShowChannel)} />
 
-          <Route exact path='/channel/:name' component={AllAccess(ShowChannel)} />
+          <Route exact path='/channel/:slug' component={AllAccess(ShowChannel)} />
 
           {/* CALLBACKS */}
           <Route exact path="/github" component={LoggedIn(Github)} />
           <Route path='/' component={Home} />
         </Switch>
+        {loggedIn ? <div>chat component</div>:null}
       </div>
     );
   }
