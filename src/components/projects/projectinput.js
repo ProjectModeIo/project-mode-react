@@ -118,7 +118,7 @@ export default class ProjectInput extends Component {
           showList = {true}
           title = "What roles do you need?"
           allowMultiple = {true} />
-        <button onClick={this.handleSubmit.bind(this)} className="next-button" type="submit">Next</button>
+        <button onClick={this.handleSubmit.bind(this)} className="next-button theme1_1" type="submit">Next</button>
       </div>);
   }
 }

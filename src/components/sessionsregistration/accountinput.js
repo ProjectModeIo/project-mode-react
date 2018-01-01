@@ -25,6 +25,11 @@ export default class AccountInput extends Component {
       // lastname: ''
     }
 
+    this.tooltip = {
+      username: "Between 6-16 characters: alphanumeric, underscore, and dashes only.",
+      password: "Between 6-16 characters: at least 1 uppercase, 1 lowercase, 1 number, and 1 symbol"
+    }
+
     this.validation.email = debounce(this.validation.email.bind(this), 1000);
     this.validation.username = debounce(this.validation.username.bind(this), 1000);
     this.validation.password = debounce(this.validation.password.bind(this), 700);
@@ -34,6 +39,10 @@ export default class AccountInput extends Component {
 
   validation = {
     email: () => {
+      if (this.state.email.length === 0) {
+        return;
+      }
+
       this.setState({
         email_check: "checking..."
       })
@@ -49,6 +58,10 @@ export default class AccountInput extends Component {
       }
     },
     username: () => {
+      if (this.state.username.length === 0) {
+        return;
+      }
+
       this.setState({ username_check: "checking..." })
       if (this.state.username.length > 3 && this.state.username.length < 16) {
         this.validateExists("username", { username: this.state.username })
@@ -60,6 +73,10 @@ export default class AccountInput extends Component {
       }
     },
     password: () => {
+      if (this.state.password.length === 0) {
+        return;
+      }
+
       /* at least 1 number, 1 capital letter, 1 lowercase letter, 1 symbol */
       let reg = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
       if (reg.test(this.state.password)) {
@@ -81,9 +98,12 @@ export default class AccountInput extends Component {
       }
     },
     password_confirmation: () => {
+      if (this.state.password_confirmation.length === 0) {
+        return;
+      }
       if (this.state.password === this.state.password_confirmation) {
         this.setState({
-          password_confirmation_check: "Success",
+          password_confirmation_check: "Passwords match!",
           password_confirmation_valid: true
         })
       } else {
@@ -96,6 +116,9 @@ export default class AccountInput extends Component {
   }
 
   handleFocus(field, event) {
+    this.setState({
+      currentEdit: field
+    })
     this.validation[field].cancel();
   }
 
@@ -121,17 +144,13 @@ export default class AccountInput extends Component {
 
   handleSubmit(event){
     event.preventDefault()
-    if (this.validateFields()) {
-      this.props.register({
-        email: this.state.email,
-        username: this.state.username,
-        // firstname: this.state.firstname,
-        // lastname: this.state.lastname,
-        password: this.state.password
-      })
-    } else {
-      // error status
-    }
+    this.props.register({
+      email: this.state.email,
+      username: this.state.username,
+      // firstname: this.state.firstname,
+      // lastname: this.state.lastname,
+      password: this.state.password
+    })
   }
 
   validateFields() {
@@ -178,6 +197,9 @@ export default class AccountInput extends Component {
           placeholder={titleize(field)}
           value={this.state[field]}
           onChange={this.handleChange.bind(this, field)} />
+        {this.state.currentEdit === field ?
+          <div className="account-input_tool-tip">{this.tooltip[field]}</div>
+          :null}
         {this.state[`${field}_check`] ?
           <div className="input-status">
             {this.state[`${field}_valid`] ? <FontAwesome name="check" /> : <FontAwesome name="close" />}
@@ -203,8 +225,11 @@ export default class AccountInput extends Component {
           {this.renderValidationField("username")}
           {this.renderValidationField("password")}
           {this.renderValidationField("password_confirmation")}
-          <button className="next-button"
-            type="submit">Register</button>
+          {this.validateFields() ?
+            <button className="next-button theme1_1" type="submit">
+              Next
+            </button>:null
+          }
         </form>
       </div>);
   }

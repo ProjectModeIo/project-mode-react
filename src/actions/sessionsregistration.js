@@ -178,7 +178,7 @@ export const loadAllThings = () => {
 
 
 /* websocket */
-let api_url = process.env.REACT_APP_API_URL;
+let api_url = process.env.REACT_APP_API_URL_PROD;
 const WEBSOCKET_URL = api_url.replace(/(https|http)/,'ws').replace('/api/v1','')
 
 export const connectToSocket = () => {

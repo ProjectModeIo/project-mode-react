@@ -5,6 +5,7 @@ body {
   padding: 0;
   font-family: "Montserrat";
   font-weight: 300;
+  background-color: #FBF4DC;
 }
 
 /* --- DROPDOWN LIST STYLES --- */
@@ -16,7 +17,8 @@ body {
 .inline-list__item {
   padding: 3px 6px;
   margin: 2px;
-  background-color: #eee
+  background-color: #9DD0C9;
+  color: #412462;
 }
 
 /* color hover input styles */
@@ -46,7 +48,7 @@ input::-webkit-input-placeholder {
 }
 
 input:hover::-webkit-input-placeholder, input:focus::-webkit-input-placeholder {
-    color: #4D9DD0;
+    color: #62BFB7;
 }
 
 /* index page stuff - maybe move to a more generic location */

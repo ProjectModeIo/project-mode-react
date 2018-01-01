@@ -1,5 +1,4 @@
 .Nav {
-  background-color: #eee;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -10,10 +9,11 @@
   text-decoration: none;
   padding: 15px;
   transition: .5s all;
+  color: #F5BA6E
 }
 
 .navbar_link:hover {
-  background-color: #fff;
+  background-color: #EE8163;
 }
 
 .end {

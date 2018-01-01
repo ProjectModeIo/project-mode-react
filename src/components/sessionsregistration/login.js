@@ -36,7 +36,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="home_banner two">
+      <div className="home_banner theme1_4">
         <LoginInput
           loginStatus={this.props.loginStatus}
           status={this.props.status}

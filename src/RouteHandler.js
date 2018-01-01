@@ -7,7 +7,7 @@ import Logout from './components/sessionsregistration/logout'
 import Registration from './components/sessionsregistration/registration'
 
 // projects
-import ProjectFeed from './components/projects/projectfeed'
+import ProjectIndex from './components/projects/projectindex'
 import NewProject from './components/projects/newproject'
 import ShowProject from './components/projects/showproject'
 
@@ -71,7 +71,7 @@ export default class RouteHandler extends Component {
           <Route exact path='/user/:username' component={AllAccess(UserProfile)} />
 
           {/* PROJECT */}
-          <Route exact path='/projects' component={AllAccess(ProjectFeed)} />
+          <Route exact path='/projects' component={AllAccess(ProjectIndex)} />
           <Route exact path='/p/new' component={LoggedIn(NewProject)} />
           <Route exact path='/p/:id' component={AllAccess(ShowProject)} />
           <Route exact path='/project/new' component={LoggedIn(NewProject)} />

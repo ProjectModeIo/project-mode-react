@@ -2,7 +2,6 @@ import api from '../api';
 import {batchActions} from 'redux-batched-actions';
 
 export const addProject = (project_params) => {
-  debugger;
   return (dispatch) => {
     api.post('/projects', { project: project_params })
     .then(({data}) => {
@@ -12,6 +11,10 @@ export const addProject = (project_params) => {
       dispatch(batchActions([
         {
           type: 'LOAD_PROJECT',
+          payload: data.data
+        },
+        {
+          type: "ADD_PROJECT_TO_FEED",
           payload: data.data
         },
         {

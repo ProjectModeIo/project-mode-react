@@ -33,7 +33,8 @@ export default class Github extends Component {
         },"*")
       })
       .catch((errors) => {
-        window.close();
+        debugger;
+        // window.close();
       })
     }
   }

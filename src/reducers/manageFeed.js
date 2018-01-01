@@ -12,6 +12,14 @@ export const manageFeed = (state=defaultState, action) => {
       return Object.assign({}, state, action.payload)
     case "CLEAR_FEED":
       return defaultState
+    case "ADD_PROJECT_TO_FEED":
+      return {
+        ...state,
+        projects_all: [
+          ...state.projects_all,
+          action.payload
+        ]
+      }
     default:
       return state
   }

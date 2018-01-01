@@ -4,30 +4,33 @@ import { connect } from 'react-redux';
 import '../../styles/projects.css';
 import ListProjects from './listprojects'
 
-class ProjectFeed extends Component {
-  loggedInProjectFeed() {
+const RenderProjectList = (props) => {
+  if (props.list.length > 0) {
     return (
       <div>
-        <h3>Recommended for you:</h3>
+        <h3>{props.title}</h3>
         <ListProjects
-          list={this.props.feed.projects_recommended}
-          account={this.props.account}
+          list={props.list}
+          account={props.account}
           />
-        <h3>You may be interested in: </h3>
-        <ListProjects
-          list={this.props.feed.projects_interest_related}
-          account={this.props.account}
-          />
-        <h3>These projects need a ____ </h3>
-        <ListProjects
-          list={this.props.feed.projects_role_related}
-          account={this.props.account}
-          />
-        <h3>These projects could use your skills</h3>
-        <ListProjects
-          list={this.props.feed.projects_skill_related}
-          account={this.props.account}
-          />
+      </div>
+    )
+  }
+  return false
+}
+
+class ProjectFeed extends Component {
+
+  loggedInProjectFeed() {
+    let {feed, account} = this.props
+
+    return (
+      <div>
+        <RenderProjectList title="Recommended for you" list={feed.projects_recommended} account={account} />
+        <RenderProjectList title="Related to your interests" list={feed.projects_interest_related} account={account} />
+        <RenderProjectList title="Related to your role" list={feed.projects_role_related} account={account} />
+        <RenderProjectList title="Related to your skills" list={feed.projects_skill_related} account={account} />
+        <RenderProjectList title="All projects" list={feed.projects_all} account={account} />
       </div>
     )
   }
@@ -41,19 +44,13 @@ class ProjectFeed extends Component {
   }
 
   render() {
-    return (
-      <div className="index-page">
-        <div className="main-content">
-          <h2>Browse</h2>
-          (add filter/sorting)
-          {this.props.account.id ? this.loggedInProjectFeed() : this.notLoggedInProjectFeed()}
-        </div>
-        <div className="sidebar">
-          sidebar component - if logged in, maybe a feed or messages - closable/minify
-          maybe move to the App level
-        </div>
-      </div>
-    )
+    if (this.props.account.id) {
+      // signed in
+      return this.loggedInProjectFeed()
+    } else {
+      // not signed in
+      return this.notLoggedInProjectFeed();
+    }
   }
 }
 

@@ -35,7 +35,7 @@ export default class LoginInput extends Component {
             className="account-input_input edit-homepage_input yellow-hover"
             placeholder="Password" type="password" value={this.state.password} onChange={this.handleChange.bind(this, "password")} /><br />
           <button
-            className="next-button"
+            className="next-button theme1_1"
             type="submit">Log In</button>
         </form>
 

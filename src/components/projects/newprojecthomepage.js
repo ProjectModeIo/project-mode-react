@@ -185,7 +185,7 @@ class NewProjectHomepage extends React.Component {
                   style={interestInputStyle} />
                 community.
               </h2>
-              <button className="next-button" onClick={()=>{
+              <button className="next-button theme1_1" onClick={()=>{
                   this.generateProject();
                   this.setState({ step: "editProjStep" })}}>
                 Let's get to work

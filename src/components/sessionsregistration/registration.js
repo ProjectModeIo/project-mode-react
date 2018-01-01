@@ -22,7 +22,10 @@ class Registration extends React.Component {
 
   componentWillMount(){
     if (this.props.token) {
-      this.props.push('/user/dashboard')
+      this.props.push('/user/dashboard') //change back to this
+      // this.setState({
+      //   step: 2
+      // })
     }
   }
 
@@ -59,51 +62,53 @@ class Registration extends React.Component {
                 />
               <Link to={'/login'} >Already have an account?  Login!</Link>
             </div>
-        )
+          )
         case 2:
-          return (<div>
-            <h1>Welcome, {account.firstname ? account.firstname.charAt(0).toUpperCase() + account.firstname.slice(1) : null}, what are your roles?</h1>
-            <AddToListRelation
-              pool = {{ list: roles, action: addRole.bind(this) }}
-              relation = {{ list: account.roles, action: addUserrole.bind(this), delete: deleteUserrole.bind(this) }}
-              catName = "name"
-              title = "What's your role?"
-              close = {{ action: this.nextStep.bind(this, 3), label: "next"}}
-              />
-          </div>)
+          return (
+            <div className="account-input edit-homepage_header">
+              <h1>Thanks for joining us!</h1>
+              <p>Tell us a little bit more about yourself so we can
+                show you projects relevant to your skills and interests.
+                You can also edit this later.
+              </p>
+              <AddToListRelation
+                pool = {{ list: roles, action: addRole.bind(this) }}
+                relation = {{ list: account.roles, action: addUserrole.bind(this), delete: deleteUserrole.bind(this) }}
+                catName = "name"
+                showList={true}
+                title = "What's your preferred role?"
+                />
+              <AddToListRelation
+                pool = {{ list: skills, action: addSkill.bind(this) }}
+                relation = {{ list: account.skills, action: addUserskill.bind(this), delete: deleteUserskill.bind(this) }}
+                catName = "name"
+                showList={true}
+                title = "What are your skills?"
+                />
+              <AddToListRelation
+                pool = {{ list: interests, action: addInterest.bind(this) }}
+                relation = {{ list: account.interests, action: addUserinterest.bind(this), delete: deleteUserinterest.bind(this) }}
+                catName = "name"
+                showList={true}
+                title = "What are some of your interests?"
+                />
+              <button className="next-button theme1_1" onClick={() => { this.setState({ step: 3 })}}>Next</button>
+            </div>
+          )
         case 3:
-          return (<div>
-            <h1>Welcome, {account.firstname ? account.firstname.charAt(0).toUpperCase() + account.firstname.slice(1) : null}, add your skills!</h1>
-            <AddToListRelation
-              pool = {{ list: skills, action: addSkill.bind(this) }}
-              relation = {{ list: account.skills, action: addUserskill.bind(this), delete: deleteUserskill.bind(this) }}
-              catName = "name"
-              title = "List your skills"
-              close = {{ action: this.nextStep.bind(this, 4), label: "next"}}
-              />
-          </div>)
-        case 4:
-        return (
-          <div>
-            <h1>Welcome, {account.firstname ? account.firstname.charAt(0).toUpperCase() + account.firstname.slice(1) : null}, add your interests!</h1>
-            <AddToListRelation
-              pool = {{ list: interests, action: addInterest.bind(this) }}
-              relation = {{ list: account.interests, name: "Userinterest", action: addUserinterest.bind(this), delete: deleteUserinterest.bind(this) }}
-              catName = "name"
-              title = "What are your interests?"
-              close = {{ action: this.nextStep.bind(this, 5), label: "next"}}
-              />
-          </div>)
-        case 5:
           setTimeout(()=>{
             this.props.push('/user/dashboard');
-          }, 2000)
-          return <div>Congrats, you're all signed up!  Redirecting you now...</div>
+          }, 1500)
+          return (
+            <div className="account-input edit-homepage_header">
+              <h1>Congrats, you're all signed up!  Redirecting you now...</h1>
+            </div>
+          )
       }
     })(this.state.step);
 
     return (
-      <div className="home_banner two">
+      <div className="home_banner theme1_4">
         {step}
         {this.props.status.error ? <div>{this.props.status.error}</div>: null}
       </div>);

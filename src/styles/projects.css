@@ -4,13 +4,15 @@
 }
 
 .project-list_item {
-  background-color: #eee;
+  background-color: #F5BA6E;
+  color: #412462;
   margin-bottom: 5px;
   padding: 20px 50px;
 }
 
 .project-list_item.is-owner {
-  background-color: #aaa;
+  background-color: #EE8163;
+  color: #412462;
 }
 
 .project-list_meta-data {

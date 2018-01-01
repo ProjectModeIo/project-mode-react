@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import {  bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { titleize } from '../../utilities'
+import '../../styles/profile.css'
 // import { push } from 'react-router-redux'
 import { addGithubAccount } from '../../actions/callbacks'
-
+import GithubInfo from './githubinfo'
 import ListDisplay from '../listdisplay'
 import ListProjects from '../projects/listprojects'
 
@@ -29,27 +31,47 @@ class Dashboard extends Component {
     }
   }
 
+  renderGithubInfo() {
+    let {github_account_info} = this.props.account
+    if (github_account_info) {
+      return <GithubInfo githubInfo={github_account_info}/>
+    }
+  }
+
+  renderGithubLink() {
+    let githubUrl = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`;
+    let { github_access_token } = this.props.account
+
+    if (!github_access_token) {
+      return (
+        <button className="profile-button"
+          onClick={() => { window.open(githubUrl, "Github Oauth", "width=500px,height=500px")}} >
+          Link Github
+        </button>
+      )
+    }
+  }
+
   render() {
     let { username,
       email, firstname, lastname, tagline,
       interests, roles, skills,
-      created_projects, github_access_token } = this.props.account
-    let githubUrl = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`;
+      created_projects } = this.props.account
 
     return (
-      <div className="Dashboard">
-        <h1>Hi, {firstname}</h1>
-        <p>{tagline}</p>
-        {github_access_token ? "Github Connected!":<button onClick={()=>{
-            window.open(githubUrl, "Github Oauth", "width=500px,height=500px")
-          }}>test</button>}
-        <div>
-          You are a
-          <ListDisplay
-            list={roles}
-            catName = "name"
-            customProps={{ listClass: 'inline-list__wrap', itemClass: 'inline-list__item' }} />
-        </div>
+      <div className="profile-page">
+        <div className="sidebar">
+          <h1>Hi, {titleize(username)}</h1>
+          <p>{tagline}</p>
+          {this.renderGithubInfo()}
+          {this.renderGithubLink()}
+          <div>
+            You are a
+            <ListDisplay
+              list={roles}
+              catName = "name"
+              customProps={{ listClass: 'inline-list__wrap', itemClass: 'inline-list__item' }} />
+          </div>
           <div>You have experience with
             <ListDisplay
               list={skills}
@@ -63,10 +85,13 @@ class Dashboard extends Component {
               catName="name"
               customProps={{ listClass: 'inline-list__wrap', itemClass: 'inline-list__item' }} />
           </div>
-        <p><Link to={'/user/edit'}>Edit profile</Link></p>
-      <Link to={'/project/new'}>Create a new project?</Link>
-      <h2>Manage your projects</h2>
-      <ListProjects list={created_projects} catName="title" username={username}/>
+          <p><Link to={'/user/edit'}>Edit profile</Link></p>
+        </div>
+        <div className="main-content">
+          <Link to={'/project/new'}>Create a new project?</Link>
+          <h2>Manage your projects</h2>
+          <ListProjects list={created_projects} catName="title" username={username}/>
+        </div>
       </div>
     );
   }

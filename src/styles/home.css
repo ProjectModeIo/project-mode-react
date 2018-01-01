@@ -1,12 +1,47 @@
+.theme1_6 {
+  background-color: #FBF4DC;
+  color: #4BA7A0;
+}
+
+.theme1_5 {
+  background-color: #9DD0C9;
+}
+
+.theme1_4 {
+  background-color: #4BA7A0;
+}
+
+.theme1_3 {
+  background-color: #EE8163;
+}
+
+.theme1_2 {
+  background-color: #F5BA6E;
+}
+
+.theme1_1 {
+  background-color: #412462;
+  color: #F5BA6E;
+}
+
+button.theme1_1:hover {
+  background-color: #EE8163;
+  color: #F5BA6E;
+}
+
+
+
 .one {
   /* background-color: #ddd; */
   background-color: #FCFB7E;
+  /* background-color: #fff; */
 }
 
 .two {
   background-color: #3DADE2;
   /* background-color: #ccc; */
 }
+
 .home_banner {
   padding: 60px 60px;
   display: flex;
@@ -39,11 +74,10 @@
 }
 
 .edit-homepage_header .next-button {
-  background-color: #56DCE1;
+  margin-top: 40px;
   ouline: none;
   border: 0;
-  color: white;
-  padding: 10px;
+  padding: 15px 20px;
   font-family: "Montserrat";
   font-weight: 700;
   font-size: 24px;
@@ -51,8 +85,6 @@
 }
 
 .edit-homepage_header button:hover {
-  background-color: #fff;
-  color: #000;
   cursor: pointer;
 }
 
@@ -70,6 +102,10 @@
   transition: .5s all;
 }
 
+.account-input {
+  position: relative;
+}
+
 .account-input_input {
   margin: 5px;
   padding: 7px;
@@ -82,6 +118,16 @@
   margin: 0;
   padding: 0;
   position: relative;
+}
+
+.account-input_tool-tip {
+  display: block;
+  position: absolute;
+  left: 425px;
+  width: 250px;
+  height: 100%;
+  text-align: left;
+  top: 0;
 }
 
 .input-status {
@@ -104,5 +150,5 @@
 
 .edit-homepage_input:focus {
   cursor: none;
-  background-color: #3DADE2 !important;
+  background-color: #419B94 !important;
 }

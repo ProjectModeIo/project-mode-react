@@ -20,7 +20,7 @@ class Nav extends Component {
     ]
 
     return (
-      <div className="Nav">
+      <div className="Nav theme1_1">
         <Link className="navbar_link" to={'/'}>PM[logo]</Link>
         <Link className="navbar_link" to="/projects">Projects</Link>
         <Link className="navbar_link" to="/channels">Channels</Link>

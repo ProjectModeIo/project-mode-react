@@ -13,7 +13,7 @@ export default class Home extends Component {
   render() {
     return (
       <div className="Home">
-        <div className="home_banner one">
+        <div className="home_banner theme1_6">
           <h1>Create. Communicate. Collaborate.</h1>
           <p>ProjectMode.io is here to bring developers, designers, and entrepreneurs
             together to help make ideas into reality.  Whether it's a passion project,
@@ -21,7 +21,7 @@ export default class Home extends Component {
             find likeminded people and start working together.
           </p>
         </div>
-        <div className="home_banner two">
+        <div className="home_banner theme1_5">
           <NewProjectHomepage />
         </div>
       </div>
