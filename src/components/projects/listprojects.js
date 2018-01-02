@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Link} from 'react-router-dom'
+import { nameToSlug } from '../../utilities'
 
 import FontAwesome from 'react-fontawesome'
 import javascript_time_ago from 'javascript-time-ago'
@@ -46,7 +47,7 @@ class ListProjectItem extends Component {
   }
 
   render() {
-    let { title, description, created_by, slug } = this.props.item
+    let { title, description, created_by, slug, interests } = this.props.item
 
     let time_ago_english = new javascript_time_ago('en-US')
     let inserted_at = time_ago_english.format(new Date(this.props.item.inserted_at))
@@ -59,8 +60,19 @@ class ListProjectItem extends Component {
     return (
       <div onClick={this.handleClick.bind(this)} className={`project-list_item ${isProjectCreator ? 'is-owner' : ''}`}>
         <Link to={`/u/${created_by}/${slug}`} >{title}</Link>
-        <span className="project-list_meta-data">posted by <Link to={`/user/${created_by}`}>{created_by}</Link> {inserted_at}</span>
+        <span className="project-list_meta-data project-list_meta-data-item">posted by <Link to={`/user/${created_by}`}>{created_by}</Link> {inserted_at}</span>
         <div>{description}</div>
+        <span className="project-list_meta-data">
+          tags: {interests.map(interest => {
+            return (
+              <span className="project-list_meta-data-item">
+                <Link to={`/c/${nameToSlug(interest.name)}`}>
+                  {interest.name}
+                </Link>
+              </span>
+            )
+          })}
+        </span>
         <div>
           {this.state.expanded ? <div>EXPAND</div>:null}
         </div>

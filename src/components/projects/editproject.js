@@ -32,7 +32,16 @@ class EditProject extends Component {
           relation = {{
             list: currentProject.roles,
             action: addProjectrole.bind(this, currentProject.id),
-            delete: deleteProjectrole.bind(this) }}
+            delete: deleteProjectrole.bind(this)
+          }}
+          customProps={{
+            outerWrapClass: "project-input_list-wrap",
+            rowClass: "project-input_row",
+            titleClass: "project-input_label",
+            inputClass: "project-input_select",
+            addButtonClass: "next-button theme1_1",
+            listWrapClass: "project-input_list-display"
+          }}
           catName = "name"
           showList = {true}
           title = "What roles do you need?"
@@ -43,7 +52,16 @@ class EditProject extends Component {
           relation = {{
             list: currentProject.interests,
             action: addProjectinterest.bind(this, currentProject.id),
-            delete: deleteProjectinterest.bind(this) }}
+            delete: deleteProjectinterest.bind(this)
+          }}
+          customProps={{
+            outerWrapClass: "project-input_list-wrap",
+            rowClass: "project-input_row",
+            titleClass: "project-input_label",
+            inputClass: "project-input_select",
+            addButtonClass: "next-button theme1_1",
+            listWrapClass: "project-input_list-display"
+          }}
           catName = "name"
           showList = {true}
           title = "Project audience/category?"
@@ -53,7 +71,16 @@ class EditProject extends Component {
           relation = {{
             list: currentProject.skills,
             action: addProjectskill.bind(this, currentProject.id),
-            delete: deleteProjectskill.bind(this) }}
+            delete: deleteProjectskill.bind(this)
+          }}
+          customProps={{
+            outerWrapClass: "project-input_list-wrap",
+            rowClass: "project-input_row",
+            titleClass: "project-input_label",
+            inputClass: "project-input_select",
+            addButtonClass: "next-button theme1_1",
+            listWrapClass: "project-input_list-display"
+          }}
           catName = "name"
           showList = {true}
           title = "What skills do you need?"

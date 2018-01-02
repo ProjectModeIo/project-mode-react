@@ -40,13 +40,13 @@ class Dashboard extends Component {
 
   renderGithubLink() {
     let githubUrl = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`;
-    let { github_access_token } = this.props.account
+    let { github_access_token, github_account_info } = this.props.account
 
     if (!github_access_token) {
       return (
         <button className="profile-button"
           onClick={() => { window.open(githubUrl, "Github Oauth", "width=500px,height=500px")}} >
-          Link Github
+          {github_account_info ? "Refresh":"Link"} Github
         </button>
       )
     }
@@ -61,7 +61,7 @@ class Dashboard extends Component {
     return (
       <div className="profile-page">
         <div className="sidebar">
-          <h1>Hi, {titleize(username)}</h1>
+          <h2>Hi, {titleize(username)}</h2>
           <p>{tagline}</p>
           {this.renderGithubInfo()}
           {this.renderGithubLink()}
@@ -88,9 +88,9 @@ class Dashboard extends Component {
           <p><Link to={'/user/edit'}>Edit profile</Link></p>
         </div>
         <div className="main-content">
-          <Link to={'/project/new'}>Create a new project?</Link>
           <h2>Manage your projects</h2>
           <ListProjects list={created_projects} catName="title" username={username}/>
+          <Link to={'/project/new'}>Create a new project?</Link>
         </div>
       </div>
     );

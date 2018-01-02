@@ -92,7 +92,7 @@ class Registration extends React.Component {
                 showList={true}
                 title = "What are some of your interests?"
                 />
-              <button className="next-button theme1_1" onClick={() => { this.setState({ step: 3 })}}>Next</button>
+              <button className="next-button next-button_home theme1_1" onClick={() => { this.setState({ step: 3 })}}>Next</button>
             </div>
           )
         case 3:

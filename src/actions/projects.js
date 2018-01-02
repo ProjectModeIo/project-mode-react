@@ -58,9 +58,9 @@ export const loadProject = (id) => {
   }
 }
 
-export const loadProjectBySlug = (slug) => {
+export const loadProjectBySlug = (username, slug) => {
   return (dispatch) => {
-    api.get(`/projectslug/${slug}`)
+    api.get(`/projectslug/${username}/${slug}`)
     .then(({data}) => {
       dispatch({
         type: 'LOAD_PROJECT',

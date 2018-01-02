@@ -18,23 +18,23 @@ class ShowProject extends Component {
   }
 
   componentWillMount() {
-    let { slug, id } = this.props.match.params
+    let { username, slug, id } = this.props.match.params
 
     if (id) {
       this.props.loadProject(id);
     } else if (slug) {
-      this.props.loadProjectBySlug(slug);
+      this.props.loadProjectBySlug(username, slug);
     }
     // eventually check query params for editing maybe??
   }
 
   componentWillReceiveProps(nextProps) {
-    let { slug, id } = nextProps.match.params
+    let { username, slug, id } = nextProps.match.params
 
     if (slug) {
-      if (this.props.match.params.slug !== slug) {
+      if (this.props.match.params.username !== this.props.match.params.username || this.props.match.params.slug !== slug) {
         // debugger;
-        this.props.loadProjectBySlug(slug)
+        this.props.loadProjectBySlug(username, slug)
       }
     } else if (id) {
       if (this.props.match.params.id !== id) {

@@ -30,9 +30,9 @@ class EditProfile extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.account.id) {
       this.setState({
-        firstname: nextProps.account.firstname,
-        lastname: nextProps.account.lastname,
-        tagline: nextProps.account.tagline
+        firstname: nextProps.account.firstname || '',
+        lastname: nextProps.account.lastname || '',
+        tagline: nextProps.account.tagline || ''
       })
     }
   }

@@ -96,7 +96,7 @@ export const clearUser = () =>{
 }
 
 export const logout = () => {
-  window.localStorage.removeItem("current_user")
+  window.localStorage.clear();
   /* add all clean-up here */
   return batchActions([
     {
@@ -178,7 +178,7 @@ export const loadAllThings = () => {
 
 
 /* websocket */
-let api_url = process.env.REACT_APP_API_URL_PROD;
+let api_url = process.env.REACT_APP_API_URL;
 const WEBSOCKET_URL = api_url.replace(/(https|http)/,'ws').replace('/api/v1','')
 
 export const connectToSocket = () => {

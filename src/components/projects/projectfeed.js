@@ -2,22 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import '../../styles/projects.css';
-import ListProjects from './listprojects'
-
-const RenderProjectList = (props) => {
-  if (props.list.length > 0) {
-    return (
-      <div>
-        <h3>{props.title}</h3>
-        <ListProjects
-          list={props.list}
-          account={props.account}
-          />
-      </div>
-    )
-  }
-  return false
-}
+import RenderProjectList from './renderprojectlist'
 
 class ProjectFeed extends Component {
 
@@ -36,9 +21,10 @@ class ProjectFeed extends Component {
   }
 
   notLoggedInProjectFeed() {
+    let {feed, account} = this.props
     return (
       <div>
-        <ListProjects list={this.props.feed.projects_all} />
+        <RenderProjectList title="All projects" list={feed.projects_all} account={account} />
       </div>
     )
   }

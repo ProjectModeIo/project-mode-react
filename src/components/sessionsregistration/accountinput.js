@@ -211,13 +211,6 @@ export default class AccountInput extends Component {
   }
 
   render() {
-    // <input
-    //   className="account-input_input edit-homepage_input yellow-hover"
-    //   type="text" placeholder="First Name" value={this.state.firstname} onChange={this.handleChange.bind(this, "firstname")} /><br />
-    // <input
-    //   className="account-input_input edit-homepage_input yellow-hover"
-    //   type="text" placeholder="Last Name" value={this.state.lastname} onChange={this.handleChange.bind(this, "lastname")} /><br />
-    //
     return (
       <div className="account-input edit-homepage_header">
         <form onSubmit={this.handleSubmit.bind(this)}>
@@ -226,7 +219,7 @@ export default class AccountInput extends Component {
           {this.renderValidationField("password")}
           {this.renderValidationField("password_confirmation")}
           {this.validateFields() ?
-            <button className="next-button theme1_1" type="submit">
+            <button className="next-button next-button_home theme1_1" type="submit">
               Next
             </button>:null
           }

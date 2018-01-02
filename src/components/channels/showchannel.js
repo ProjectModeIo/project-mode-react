@@ -5,7 +5,9 @@ import { push } from 'react-router-redux'
 import { nameToSlug, slugToName } from '../../utilities'
 import { loadCurrentChannel, clearCurrentChannel } from '../../actions/channel'
 
+import RenderProjectList from '../projects/renderprojectlist'
 import ChannelRoomPopup from './channelroom_popup'
+import unionBy from 'lodash/unionBy';
 
 class ShowChannel extends Component {
   constructor(props) {
@@ -42,13 +44,23 @@ class ShowChannel extends Component {
 
   render() {
     /* variables */
+    let { account } = this.props
     let { name, role, skill, interest, id } = this.props.currentChannel
+    role = role || {}
+    skill = skill || {}
+    interest = interest || {}
+    let channelProjs = unionBy(role.projects, skill.projects, interest.projects, "id")
 
     if (this.props.currentChannel.id) {
       return (
-        <div>
-          <h1>{name}</h1>
-          {this.renderChat()}
+        <div className="index-page">
+          <div className="main-content">
+            <RenderProjectList title="All projects" list={channelProjs} account={account} />
+          </div>
+          <div className="sidebar">
+            <h1>{name}</h1>
+            {this.renderChat()}
+          </div>
         </div>
       )
     } else {

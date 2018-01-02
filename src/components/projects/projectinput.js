@@ -47,7 +47,7 @@ export default class ProjectInput extends Component {
     return true;
   }
 
-  addProjectRole(field, params) {
+  addProjectList(field, params) {
     let prevList = this.state[field]
     let lastId = prevList.length > 0 ? prevList[prevList.length - 1] : 0
     let newItem = {...params, id: lastId}
@@ -57,7 +57,7 @@ export default class ProjectInput extends Component {
     }, this.saveProgress)
   }
 
-  deleteProjectRole(field, id) {
+  deleteProjectList(field, id) {
     let newList = this.state[field].filter(item => item.id !== id)
 
     this.setState({
@@ -82,43 +82,101 @@ export default class ProjectInput extends Component {
 
     return (
       <div className="project-input">
-        <input type="title"
-          className="project-input_inputs"
-          onBlur={this.saveProgress.bind(this)}
-          placeholder="My New Project!"
-          value={this.state.title}
-          onChange={this.handleChange.bind(this, "title")} /><br />
-        <textarea
-          className="project-input_inputs"
-          type="description"
-          onBlur={this.saveProgress.bind(this)}
-          placeholder="A cool description"
-          value={this.state.description}
-          onChange={this.handleChange.bind(this, "description")} /><br />
-        <select
-          onChange={(event)=>{
+        <div className="project-input_row">
+          <input type="title"
+            className="project-input_inputs"
+            onBlur={this.saveProgress.bind(this)}
+            placeholder="My New Project!"
+            value={this.state.title}
+            onChange={this.handleChange.bind(this, "title")} />
+        </div>
+        <div className="project-input_row">
+          <textarea
+            className="project-input_inputs"
+            type="description"
+            onBlur={this.saveProgress.bind(this)}
+            placeholder="A cool description"
+            value={this.state.description}
+            onChange={this.handleChange.bind(this, "description")} />
+        </div>
+        <div className="project-input_row">
+          <label className="project-input_label">This is a: </label>
+          <select
+            className="project-input_select"
+            onChange={(event)=>{
               this.setState({
                 project_scope: event.target.value
               }, ()=> {
                 this.saveProgress()
               })
-          }}
-          value={this.state.project_scope}>
-          {projectScopeDefaults.map(item => {
-            return (<option>{item}</option>)
-          })}
-        </select>
-        <AddToListRelation
-          pool = {{ list: roles, action: addRole.bind(this) }}
-          relation = {{
-            list: this.state.roles,
-            action: this.addProjectRole.bind(this, 'roles'),
-            delete: this.deleteProjectRole.bind(this, 'roles') }}
-          catName = "name"
-          showList = {true}
-          title = "What roles do you need?"
-          allowMultiple = {true} />
-        <button onClick={this.handleSubmit.bind(this)} className="next-button theme1_1" type="submit">Next</button>
+            }}
+            value={this.state.project_scope}>
+            {projectScopeDefaults.map(item => {
+              return (<option>{item}</option>)
+            })}
+          </select>
+        </div>
+        <div className="project-input_row">
+          <AddToListRelation
+            pool = {{ list: roles, action: addRole.bind(this) }}
+            relation = {{
+              list: this.state.roles,
+              action: this.addProjectList.bind(this, 'roles'),
+              delete: this.deleteProjectList.bind(this, 'roles') }}
+            customProps={{
+              outerWrapClass: "project-input_list-wrap",
+              rowClass: "project-input_row",
+              titleClass: "project-input_label",
+              inputClass: "project-input_select",
+              addButtonClass: "next-button theme1_1",
+              listWrapClass: "project-input_list-display"
+            }}
+            catName = "name"
+            showList = {true}
+            title = "What roles are you looking for"
+            allowMultiple = {true} />
+        </div>
+        <div className="project-input_row">
+          <AddToListRelation
+            pool = {{ list: skills, action: addSkill.bind(this) }}
+            relation = {{
+              list: this.state.skills,
+              action: this.addProjectList.bind(this, 'skills'),
+              delete: this.deleteProjectList.bind(this, 'skills') }}
+            customProps={{
+              outerWrapClass: "project-input_list-wrap",
+              rowClass: "project-input_row",
+              titleClass: "project-input_label",
+              inputClass: "project-input_select",
+              addButtonClass: "next-button theme1_1",
+              listWrapClass: "project-input_list-display"
+            }}
+            catName = "name"
+            showList = {true}
+            title = "Project Stack" />
+        </div>
+        <div className="project-input_row">
+          <AddToListRelation
+            pool = {{ list: interests, action: addInterest.bind(this) }}
+            relation = {{
+              list: this.state.interests,
+              action: this.addProjectList.bind(this, 'interests'),
+              delete: this.deleteProjectList.bind(this, 'interests') }}
+            customProps={{
+              outerWrapClass: "project-input_list-wrap",
+              rowClass: "project-input_row",
+              titleClass: "project-input_label",
+              inputClass: "project-input_select",
+              addButtonClass: "next-button theme1_1",
+              listWrapClass: "project-input_list-display"
+            }}
+            catName = "name"
+            showList = {true}
+            title = "Add Tags" />
+        </div>
+        <div className="project-input_row">
+          <button onClick={this.handleSubmit.bind(this)} className="next-button next-button_home theme1_1" type="submit">Next</button>
+        </div>
       </div>);
   }
 }

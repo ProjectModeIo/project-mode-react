@@ -64,4 +64,5 @@ input:hover::-webkit-input-placeholder, input:focus::-webkit-input-placeholder {
 
 .sidebar {
   flex: 1;
+  margin-right: 5px;
 }

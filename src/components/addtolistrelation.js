@@ -64,38 +64,43 @@ export default class AddToListRelation extends React.Component {
     let { pool, relation, catName, close, title, allowMultiple, showList } = this.props
     let customProps = this.props.customProps || {}
     let { outerWrapClass, outerWrapStyle, inputClass, inputStyle,
-      wrapperClass, wrapperStyle, renderItemClass } = customProps
+      wrapperClass, wrapperStyle, renderItemClass,
+      rowClass, titleClass, addButtonClass, listWrapClass } = customProps
 
     let inRelationArr = relation.list.map((item) => item.name)
 
     return (
       <div style={outerWrapStyle} className={outerWrapClass}>
-        {title ? <h2>{title}</h2> : null }
-        <Autocomplete
-          inputProps={{ className: inputClass, style: inputStyle }}
-          wrapperProps={{ className: wrapperClass, style: wrapperStyle || { display: "inline-block" } }}
-          getItemValue={(item) => item.name}
-          items={allowMultiple ? pool.list : pool.list.filter((item) => !inRelationArr.includes(item.name))}
-          renderItem={(item, isHighlighted) =>
-            <div className={renderItemClass} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-              {item.name}
-            </div>
-          }
-          shouldItemRender={this.matchStateToTerm.bind(this)}
-          value={this.state.itemInput}
-          onChange={(e) => this.setState({ itemInput: e.target.value })}
-          onSelect={(val) => this.setState({ itemInput: val })}
-        />
-      <button onClick={this.addItem.bind(this)}>add</button>
-        {showList ? relation.list.map((item, index) => {
-          return (
-            <div key={index}>
-              {item.name}
-              <button onClick={this.deleteItem.bind(this, item.id)}>x</button>
-            </div>
-          )
-        }) : null}
-        {close ? <button onClick={close.action.bind(this)}>{close.label}</button> : null }
+        <div className={rowClass}>
+          {title ? <h2 className={titleClass}>{title}</h2> : null }
+          <Autocomplete
+            inputProps={{ className: inputClass, style: inputStyle }}
+            wrapperProps={{ className: wrapperClass, style: wrapperStyle || { display: "inline-block" } }}
+            getItemValue={(item) => item.name}
+            items={allowMultiple ? pool.list : pool.list.filter((item) => !inRelationArr.includes(item.name))}
+            renderItem={(item, isHighlighted) =>
+              <div className={renderItemClass} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                {item.name}
+              </div>
+            }
+            shouldItemRender={this.matchStateToTerm.bind(this)}
+            value={this.state.itemInput}
+            onChange={(e) => this.setState({ itemInput: e.target.value })}
+            onSelect={(val) => this.setState({ itemInput: val })}
+            />
+          <button className={addButtonClass} onClick={this.addItem.bind(this)}>add</button>
+        </div>
+        <div className={`${rowClass} ${listWrapClass}`}>
+          {showList ? relation.list.map((item, index) => {
+            return (
+              <div key={index}>
+                {item.name}
+                <button onClick={this.deleteItem.bind(this, item.id)}>x</button>
+              </div>
+            )
+          }) : null}
+        </div>
+          {close ? <button onClick={close.action.bind(this)}>{close.label}</button> : null }
       </div>
     )
   }
