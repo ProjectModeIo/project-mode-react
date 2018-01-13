@@ -80,6 +80,70 @@ export const clearProject = () =>{
   }
 }
 
+export const addWatch = (watched_params) => {
+  return (dispatch) => {
+    api.post('/watchedprojects', watched_params)
+    .then(({data}) => {
+      dispatch(batchActions([
+        {
+          type: "ADD_WATCH_TO_PROJECT",
+          payload: data.data
+        }
+      ]))
+    })
+    .catch((errors) => {
+      let errMsg = ((error) => {
+        switch(true) {
+          case (error.data && error.data.message === "invalid_token"):
+            return "You must be logged in"
+          default:
+            return "Something went wrong"
+        }
+      })(errors.response)
+
+      dispatch({
+        type: "ADD_ERROR",
+        payload: errMsg
+      })
+    })
+  }
+}
+
+export const addVolunteer = (project_id) => {
+  return (dispatch) => {
+    api.post('/volunteers', project_id)
+    .then (({data}) => {
+      dispatch(batchActions([
+        {
+          type: "ADD_VOLUNTEER_TO_PROJECT",
+          payload: data.data
+        }
+      ]))
+    })
+    .catch((errors) => {
+      debugger;
+    })
+  }
+}
+
+export const deleteVolunteer = (id) => {
+  return (dispatch) => {
+    api.delete(`/volunteers/${id}`)
+      .then(({data}) => {
+        dispatch(batchActions([{
+          type: 'DELETE_PROJECT_VOLUNTEER',
+          payload: id
+        },{
+          // type: 'LOAD_FEED',
+          // payload: data.feed
+        }]))
+      })
+      .catch((errors) => {
+        debugger;
+      })
+  }
+}
+
 export const submitComment = (project_id, params) => {
   params.comment.project_id = project_id
 

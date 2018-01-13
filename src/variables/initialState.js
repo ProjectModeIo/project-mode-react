@@ -39,9 +39,16 @@ const initialState = {
     teams: {},
     convos: {}
   },
+  manageNotifications: {
+    channel: null,
+    notifications: []
+  },
   manageCurrentProject: {
     title: '',
     description: '',
+    user: {},
+    watchedprojects: [],
+    volunteers: [],
     roles: [],
     skills: [],
     interests: [],

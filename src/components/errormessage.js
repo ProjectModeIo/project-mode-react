@@ -24,7 +24,12 @@ class ErrorMessage extends Component {
   }
 
   render() {
-    return this.displayError(this.props.error)
+    let { error } = this.props.status
+    if (error) {
+      return this.displayError(error)
+    } else {
+      return null;
+    }
   }
 }
 

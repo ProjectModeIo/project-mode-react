@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { nameToSlug } from '../../utilities'
 
 import FontAwesome from 'react-fontawesome'
@@ -47,7 +47,7 @@ class ListProjectItem extends Component {
   }
 
   render() {
-    let { title, description, created_by, slug, interests } = this.props.item
+    let { title, description, watchedprojects, created_by, slug, interests } = this.props.item
 
     let time_ago_english = new javascript_time_ago('en-US')
     let inserted_at = time_ago_english.format(new Date(this.props.item.inserted_at))
@@ -56,9 +56,12 @@ class ListProjectItem extends Component {
     let account = this.props.account || {}
     /* auth stuff */
     let isProjectCreator = account.username === created_by
+    let projectStatus = watchedprojects.reduce((acc, cur) => { return acc + cur.interestlevel}, 0)
 
     return (
       <div onClick={this.handleClick.bind(this)} className={`project-list_item ${isProjectCreator ? 'is-owner' : ''}`}>
+        <div style={{position: 'absolute', left: 0, top: 0,
+          padding: "20px", fontSize: "18px"}}>{projectStatus}</div>
         <Link to={`/u/${created_by}/${slug}`} >{title}</Link>
         <span className="project-list_meta-data project-list_meta-data-item">posted by <Link to={`/user/${created_by}`}>{created_by}</Link> {inserted_at}</span>
         <div>{description}</div>

@@ -56,8 +56,8 @@ class Dashboard extends Component {
     let { username,
       email, firstname, lastname, tagline,
       interests, roles, skills,
-      created_projects } = this.props.account
-
+      created_projects, watched_projects } = this.props.account
+    watched_projects = watched_projects.filter(proj=>proj.interestlevel > 0).map(proj=>{return proj.project})
     return (
       <div className="profile-page">
         <div className="sidebar">
@@ -90,6 +90,8 @@ class Dashboard extends Component {
         <div className="main-content">
           <h2>Manage your projects</h2>
           <ListProjects list={created_projects} catName="title" username={username}/>
+          <h2>On your watch list</h2>
+          <ListProjects list={watched_projects} catName="title" username={username}/>
           <Link to={'/project/new'}>Create a new project?</Link>
         </div>
       </div>

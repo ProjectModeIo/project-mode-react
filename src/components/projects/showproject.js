@@ -55,12 +55,13 @@ class ShowProject extends Component {
 
     /* project creator admin */
     let isOwner = currentProject.created_by === account.username;
-    let adminBox =
-    <div>
-      <button onClick={()=>{this.setState({editing: !editing})}}>
-        {editing ? "done":"edit"}
-      </button>
-    </div>
+    let adminBox = (
+      <div>
+        <button onClick={()=>{this.setState({editing: !editing})}}>
+          {editing ? "done":"edit"}
+        </button>
+      </div>
+    )
 
     return (
       <div>

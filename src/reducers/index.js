@@ -9,11 +9,13 @@ import {manageFeed} from './manageFeed'
 import {manageChannels} from './manageChannels'
 import {manageCurrentProfile} from './manageCurrentProfile'
 import {manageRooms} from './manageRooms'
+import {manageNotifications} from './manageNotifications'
 import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
   manageAccount, manageLogin, manageRoles, manageStatus, manageSkills, manageInterests,
-  manageCurrentProject, manageFeed, manageChannels, manageCurrentProfile, manageRooms
+  manageCurrentProject, manageFeed, manageChannels, manageCurrentProfile, manageRooms,
+  manageNotifications
 })
 
 export default rootReducer

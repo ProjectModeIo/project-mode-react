@@ -4,6 +4,7 @@
 }
 
 .project-list_item {
+  position: relative;
   background-color: #F5BA6E;
   color: #412462;
   margin-bottom: 5px;
@@ -100,4 +101,17 @@
 
 .project-input_list-display > div {
   margin-right: 10px;
+}
+
+/* volunteers */
+.volunteer_wrap {
+  padding: 10px 0px;
+  /*
+  border: 1px solid #000;
+  background: #eee; */
+}
+
+.volunteer_item {
+  margin: 5px 0px;
+  padding: 5px;
 }

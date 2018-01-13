@@ -2,10 +2,13 @@ let defaultState = {
   title: '',
   description: '',
   user_id: '',
+  user: {},
   roles: [],
   skills: [],
   interests: [],
-  comments: []
+  comments: [],
+  watchedprojects: [],
+  volunteers: []
 }
 export const manageCurrentProject = (state=defaultState, action) => {
   switch (action.type) {
@@ -36,6 +39,39 @@ export const manageCurrentProject = (state=defaultState, action) => {
       return Object.assign({}, state, {interests: newInterests})
     case "ADD_COMMENT":
       return Object.assign({}, state, { comments: [...state.comments, action.payload]})
+    case "ADD_WATCH_TO_PROJECT":
+      let watchExists = false;
+      let newWatchedArrays = state.watchedprojects.map(watch => {
+        if (watch.id === action.payload.id) {
+          watchExists = true;
+          return action.payload
+        } else {
+          return watch;
+        }
+      })
+      if (!watchExists) {
+        newWatchedArrays.push(action.payload);
+      }
+      return {
+        ...state,
+        watchedprojects: newWatchedArrays
+      }
+    case "ADD_VOLUNTEER_TO_PROJECT":
+      return {
+        ...state,
+        volunteers: [
+          ...state.volunteers,
+          action.payload
+        ]
+      }
+    case "DELETE_PROJECT_VOLUNTEER":
+      let newVolunteers = state.volunteers.filter(volunteers => {
+        return volunteers.id !== action.payload
+      })
+      return {
+        ...state,
+        volunteers: newVolunteers
+      }
     default:
       return state
   }

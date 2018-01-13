@@ -23,17 +23,20 @@ class NewProjectHomepage extends React.Component {
       {
         role: "developer",
         purpose: "to create a publicly accessible API of climbing regions",
-        interest: "climbing"
+        interest: "climbing",
+        skill: "Rails"
       },
       {
         role: "web designer",
         purpose: "to collect an index of free resources and tutorials",
-        interest: "graphic design"
+        interest: "graphic design",
+        skill: "Wordpress"
       },
       {
         role: "data scientist",
         purpose: "to render NASA data",
-        interest: "space"
+        interest: "space",
+        skill: "D3"
       }
     ]
 
@@ -46,7 +49,8 @@ class NewProjectHomepage extends React.Component {
       form: {
         purpose: "title",
         description: "description",
-        role: "developer"
+        role: "developer",
+        skill: "stack"
       }
     }
   }
@@ -64,7 +68,8 @@ class NewProjectHomepage extends React.Component {
       form: {... this.state.form,
         role: this.options[rand].role,
         purpose: this.options[rand].purpose,
-        interest: this.options[rand].interest
+        interest: this.options[rand].interest,
+        skill: this.options[rand].skill
       }
     })
 
@@ -112,7 +117,7 @@ class NewProjectHomepage extends React.Component {
       title: `A ${this.state.form.interest} project`,
       description: `I am working ${this.state.form.purpose}`,
       roles: [{name: this.state.form.role, id: 0}],
-      skills: [],
+      skills: [{name: this.state.form.skill, id: 0}],
       interests: [{name: this.state.form.interest, id: 0}],
     }
 
@@ -141,6 +146,9 @@ class NewProjectHomepage extends React.Component {
     let interestInputStyle = {
       width: (this.state.form.interest.length * 14) + 10 + "px", // keep
     }
+    let skillInputStyle = {
+      width: (this.state.form.skill.length * 14) + 10 + "px", // keep
+    }
 
     let LoginRegistration = this.state.login ? (
       <LoginInput
@@ -167,7 +175,15 @@ class NewProjectHomepage extends React.Component {
                   type="text"
                   placeholder={this.state.form.role}
                   onChange={this.handleChange.bind(this, "role")}
-                  style={roleInputStyle} /> working
+                  style={roleInputStyle} />
+                working on a
+                <input
+                  className="edit-homepage_input yellow-hover"
+                  type="text"
+                  placeholder={this.state.form.skill}
+                  onChange={this.handleChange.bind(this, "skill")}
+                  style={skillInputStyle} />
+                project
                 <br />
                 <input
                   className="edit-homepage_input green-hover"

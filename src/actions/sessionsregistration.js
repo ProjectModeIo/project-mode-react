@@ -191,6 +191,7 @@ export const connectToSocket = () => {
       }
     });
     socket.connect()
+
     dispatch({
       type: 'SOCKET_CONNECTED',
       payload: socket

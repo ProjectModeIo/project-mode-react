@@ -24,6 +24,9 @@ export default class Home extends Component {
         <div className="home_banner theme1_5">
           <NewProjectHomepage />
         </div>
+        <div className="home_banner theme1_4">
+          wooord
+        </div>
       </div>
     );
   }

@@ -11,17 +11,28 @@ class ProjectFeed extends Component {
 
     return (
       <div>
-        <RenderProjectList title="Recommended for you" list={feed.projects_recommended} account={account} />
-        <RenderProjectList title="Related to your interests" list={feed.projects_interest_related} account={account} />
-        <RenderProjectList title="Related to your role" list={feed.projects_role_related} account={account} />
-        <RenderProjectList title="Related to your skills" list={feed.projects_skill_related} account={account} />
-        <RenderProjectList title="All projects" list={feed.projects_all} account={account} />
+        <RenderProjectList title="Recommended for you"
+          link={{path: "/recommended_projects", name: "see all recommended projects"}}
+          limit={5} list={feed.projects_recommended} account={account} />
+        <RenderProjectList title="Related to your interests"
+          link={{path: "/interest_projects", name: "see all projects related to your interests"}}
+          limit={5} list={feed.projects_interest_related} account={account} />
+        <RenderProjectList title="Related to your role"
+          link={{path: "/role_projects", name: "see all projects related to your roles"}}
+          limit={5} list={feed.projects_role_related} account={account} />
+        <RenderProjectList title="Related to your skills"
+          link={{path: "/skill_projects", name: "see all projects related to your skills"}}
+          limit={5} list={feed.projects_skill_related} account={account} />
+        <RenderProjectList title="All projects"
+          link={{path: "/all_projects", name: "see all projects"}}
+          limit={5} list={feed.projects_all} account={account} />
       </div>
     )
   }
 
   notLoggedInProjectFeed() {
     let {feed, account} = this.props
+
     return (
       <div>
         <RenderProjectList title="All projects" list={feed.projects_all} account={account} />

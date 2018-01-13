@@ -24,6 +24,7 @@ class Nav extends Component {
         <Link className="navbar_link" to={'/'}>PM[logo]</Link>
         <Link className="navbar_link" to="/projects">Projects</Link>
         <Link className="navbar_link" to="/channels">Channels</Link>
+        <Link className="navbar_link" to="/search">Search</Link>
         <div className="end">
           {loggedIn ? loggedInLinks.map(link => link) : loggedOutLinks.map(link => link)}
         </div>

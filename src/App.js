@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux'
 import Nav from './components/nav'
 import ErrorMessage from './components/errormessage.js'
+import Notifications from './components/notifications.js'
 import RouteHandler from './RouteHandler'
 
 import { clearUser, logout, setUser, loadAllThings, connectToSocket } from './actions/sessionsregistration' // session actions
@@ -31,6 +32,12 @@ class App extends Component {
     this.props.listInterests();
   }
 
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.location !== this.props.location ||
+      nextProps.loginStatus.loaded !== this.props.loginStatus.loaded ||
+      nextProps.loginStatus.logged_in !== this.props.loginStatus.logged_in)
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!this.props.token && nextProps.token) {
       this.props.connectToSocket();
@@ -38,7 +45,6 @@ class App extends Component {
   }
 
   render() {
-    let {error} = this.props.status
     return (
       <div className="App">
         <Nav />
@@ -47,7 +53,8 @@ class App extends Component {
           loaded={this.props.loginStatus.loaded}
           loggedIn={this.props.loginStatus.logged_in}
           />
-        {error ? <ErrorMessage error={error} /> : null}
+        <Notifications />
+        <ErrorMessage />
       </div>
     );
   }
@@ -55,10 +62,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return ({
-    account: state.manageAccount,
     loginStatus: state.manageLogin,
-    token: state.manageLogin.token,
-    status: state.manageStatus
+    token: state.manageLogin.token
   })
 }
 

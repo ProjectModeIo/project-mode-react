@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
-import { nameToSlug, slugToName } from '../../utilities'
+import ListChannels from './listchannels'
+import '../../styles/channels.css'
 
 class ChannelIndex extends Component {
 
@@ -14,7 +15,7 @@ class ChannelIndex extends Component {
         <div className="main-content">
           <h2>Channels</h2>
           (search by type / autocomplete)
-          {allChannels.map(channel => <h2><Link to={`/c/${nameToSlug(channel.name)}`}>{channel.name}</Link></h2>)}
+          <ListChannels />
         </div>
         <div className="sidebar">
           sidebar
